@@ -1,3 +1,8 @@
 export { default as GlobalStyle } from './GlobalStyle'
 export { default as Message } from './Message'
 export { default as ProtectedRoute } from './ProtectedRoute'
+export { default as Header } from './Header'
+export { default as LoginForm } from './LoginForm'
+export { default as RegisterForm } from './RegisterForm'
+export { default as ForgotPasswordForm } from './ForgotPasswordForm'
+export { default as LoadingAnimation } from './LoadingAnimation'

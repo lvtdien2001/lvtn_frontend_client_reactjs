@@ -41,14 +41,14 @@ const AuthProvider = ({ children }) => {
     // Login
     const login = async (email, password) => {
         try {
-            const rsp = await axios.post(`${process.env.REACT_APP_API_URL}/auth/login-admin`, { email, password });
+            const rsp = await axios.post(`${process.env.REACT_APP_API_URL}/auth/login`, { email, password });
             if (rsp.data.success) {
                 localStorage.setItem(LOCAL_STORAGE_TOKEN_NAME, rsp.data.accessToken);
             }
             await loadUser();
             return rsp.data;
         } catch (error) {
-            if (error.response.data) {
+            if (error.response) {
                 return error.response.data;
             } else {
                 return {
