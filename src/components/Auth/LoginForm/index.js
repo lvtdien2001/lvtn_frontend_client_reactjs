@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { TbLock, TbMailFilled } from 'react-icons/tb';
 import classNames from 'classnames/bind';
 import styles from './LoginForm.module.scss';
-import { AuthContext } from '../../contexts';
+import { AuthContext } from '../../../contexts';
 
 const cx = classNames.bind(styles);
 

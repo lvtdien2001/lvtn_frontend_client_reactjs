@@ -5,7 +5,7 @@ import { TbMailFilled, TbQrcode } from 'react-icons/tb';
 import axios from 'axios';
 import classNames from 'classnames/bind';
 import styles from './ForgotPasswordForm.module.scss';
-import { LoadingAnimation } from '..';
+import { LoadingAnimation } from '../..';
 
 const cx = classNames.bind(styles);
 

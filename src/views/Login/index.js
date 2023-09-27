@@ -2,7 +2,8 @@ import { useState, useContext } from 'react';
 import { Navigate } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import styles from './Login.module.scss';
-import { LoginForm, RegisterForm, ForgotPasswordForm, Message, LoadingAnimation } from '../../components';
+import { Message, LoadingAnimation } from '../../components';
+import { LoginForm, RegisterForm, ForgotPasswordForm } from '../../components/Auth';
 import { AuthContext } from '../../contexts';
 
 const cx = classNames.bind(styles);

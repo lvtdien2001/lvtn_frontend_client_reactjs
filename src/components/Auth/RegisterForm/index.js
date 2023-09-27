@@ -5,7 +5,7 @@ import { TbLock, TbMailFilled, TbUserSquare, TbPhoneCall, TbQrcode, TbArrowBack 
 import classNames from 'classnames/bind';
 import styles from './RegisterForm.module.scss';
 import axios from 'axios';
-import { LoadingAnimation } from '..';
+import { LoadingAnimation } from '../..';
 
 const cx = classNames.bind(styles);
 

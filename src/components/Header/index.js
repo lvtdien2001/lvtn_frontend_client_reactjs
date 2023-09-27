@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Button, Container, Badge, Navbar } from 'react-bootstrap';
+import { Button, Container, Badge, Navbar, Row } from 'react-bootstrap';
 import { FaUserAlt, FaShoppingCart } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../contexts';
@@ -29,16 +29,19 @@ const Header = () => {
     )
 
     return (
-        <Container>
-            <Navbar expand="lg" className={`bg-body-tertiary`}>
-                <Container className={`${cx('wrapper')}`} fluid>
-                    <NavBar />
-                    <InputSearch />
-                    {cart}
-                    {isAuthenticated ? <Profile user={user} logout={logout} /> : login}
-                </Container>
-            </Navbar>
-        </Container>
+        <>
+            <div className={cx('nav-fixed')}>
+                <Navbar expand="lg" className={`bg-body-tertiary`}>
+                    <Container className={`${cx('wrapper')}`} fluid>
+                        <NavBar />
+                        <InputSearch />
+                        {cart}
+                        {isAuthenticated ? <Profile user={user} logout={logout} /> : login}
+                    </Container>
+                </Navbar>
+            </div>
+            <div style={{ height: '80px' }}></div>
+        </>
     )
 }
 
