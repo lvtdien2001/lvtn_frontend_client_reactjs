@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Button, Container, Badge, Navbar, Row } from 'react-bootstrap';
+import { Button, Container, Badge, Navbar } from 'react-bootstrap';
 import { FaUserAlt, FaShoppingCart } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../contexts';

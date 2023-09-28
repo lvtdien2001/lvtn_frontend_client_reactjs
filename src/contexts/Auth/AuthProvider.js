@@ -65,7 +65,8 @@ const AuthProvider = ({ children }) => {
         dispath({
             type: 'SET_AUTH',
             payload: { isAuthenticated: false, user: null }
-        })
+        });
+        setAuthToken(null);
     }
 
     const authContextData = { login, logout, authState };

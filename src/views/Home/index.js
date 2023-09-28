@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import classNames from 'classnames/bind';
 import styles from './Home.module.scss';
@@ -20,6 +21,10 @@ const Home = () => {
     }
 
     const formatName = input => input.length < 25 ? input : (input.substring(0, 25) + ' ...');
+
+    useEffect(() => {
+        document.title = 'Trang chủ'
+    }, [])
 
     return (
         <>
