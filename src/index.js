@@ -4,14 +4,16 @@ import App from './App';
 import 'bootstrap/dist/css/bootstrap.css';
 import reportWebVitals from './reportWebVitals';
 import { GlobalStyle } from './components';
-import { AuthProvider } from './contexts';
+import { AuthProvider, CartProvider } from './contexts';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     // <React.StrictMode>
     <GlobalStyle>
         <AuthProvider>
-            <App />
+            <CartProvider>
+                <App />
+            </CartProvider>
         </AuthProvider>
     </GlobalStyle>
     // </React.StrictMode>

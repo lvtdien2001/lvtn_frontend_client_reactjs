@@ -1,14 +1,37 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Button, Modal, Row, Col, Form } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { CartContext, AuthContext } from '../../../contexts';
 
 const AddProductModal = ({ product, formatPrice, setMessage }) => {
     const [show, setShow] = useState(false);
     const [quantity, setQuantity] = useState(0);
     const [isInvalid, setIsInvalid] = useState(false);
+    const { setNum } = useContext(CartContext);
+    const { authState: { isAuthenticated } } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const resetData = () => {
+        setQuantity(0);
+        setIsInvalid(false);
+    }
+
+    const countOfCart = async () => {
+        try {
+            const rsp = await axios.get(`${process.env.REACT_APP_API_URL}/cart/count`);
+            if (rsp.data.success) {
+                setNum(rsp.data.numberOfProducts);
+            }
+        } catch (error) {
+
+        }
+    }
+
+    const handleClick = () => isAuthenticated ? setShow(true) : navigate('/login');
 
     const handleSubmit = async e => {
         e?.preventDefault();
@@ -25,6 +48,8 @@ const AddProductModal = ({ product, formatPrice, setMessage }) => {
                         type: 'success',
                         content: rsp.data.msg || 'Thêm sản phẩm vào giỏ hàng thành công'
                     })
+                    countOfCart();
+                    resetData();
                 }
                 setShow(false);
             } catch (error) {
@@ -41,7 +66,7 @@ const AddProductModal = ({ product, formatPrice, setMessage }) => {
             <Button
                 variant="outline-success"
                 size='lg'
-                onClick={handleShow}
+                onClick={handleClick}
                 style={{ width: '100%' }}
                 className='mb-3'
             >
