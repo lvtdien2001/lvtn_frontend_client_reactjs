@@ -1,0 +1,5 @@
+export { default as AddAddressModal } from './AddAddressModal'
+export { default as ChangeDefaultAddress } from './ChangeDefaultAddress'
+export { default as AddressList } from './AddressList'
+export { default as UpdateAddressModal } from './UpdateAddressModal'
+export { default as DeleteAddressModal } from './DeleteAddressModal'
