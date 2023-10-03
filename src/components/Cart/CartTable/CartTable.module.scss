@@ -3,10 +3,21 @@
 }
 
 .text-blur {
-    color: #817f7f;
+    color: #535151;
     cursor: pointer;
 
     &:hover {
         color: #333;
     }
+}
+
+.empty {
+    min-height: 200px;
+    border: solid 1px #333;
+    border-radius: 10px;
+    text-align: center;
+    padding-top: 75px;
+    background-color: var(--bs-light);
+    font-size: 20px;
+    font-weight: 500;
 }

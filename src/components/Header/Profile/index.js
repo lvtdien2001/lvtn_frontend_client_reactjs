@@ -24,7 +24,7 @@ const Profile = ({ user, logout }) => {
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-                <Link to='#' className={cx('link')}>
+                <Link to='/address' className={cx('link')}>
                     <Dropdown.Item as='div'>Quản lý địa chỉ</Dropdown.Item>
                 </Link>
 

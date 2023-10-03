@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { HotProducts } from '../../components/Product';
@@ -22,6 +22,10 @@ const Cart = () => {
     }
 
     const formatName = input => input.length < 25 ? input : (input.substring(0, 25) + ' ...');
+
+    useEffect(() => {
+        document.title = 'Giỏ hàng';
+    }, [])
 
     return (
         <Container>

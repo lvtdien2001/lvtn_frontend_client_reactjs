@@ -5,14 +5,16 @@ import styles from './PaymentModal.module.scss';
 
 const cx = classNames.bind(styles);
 
-const PaymentModal = () => {
+const PaymentModal = ({ setPaymentMethod }) => {
     const [show, setShow] = useState(false);
+    const [payMethod, setPayMethod] = useState('');
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const handleDelete = async () => {
-
+    const handleSubmit = () => {
+        setPaymentMethod(payMethod);
+        handleClose();
     }
 
     return (
@@ -24,20 +26,34 @@ const PaymentModal = () => {
                     <Modal.Title>Chọn phương thức thanh toán</Modal.Title>
                 </Modal.Header>
 
-                <Modal.Body>
+                <Modal.Body className='fs-4'>
                     <Form.Check>
-                        <Form.Check.Input isValid name='payment' type='radio' id='online' />
+                        <Form.Check.Input
+                            onChange={() => setPayMethod('01')}
+                            isValid
+                            name='payment'
+                            type='radio'
+                            id='online'
+                            checked={payMethod === '01'}
+                        />
                         <Form.Check.Label htmlFor='online'>Thanh toán trực tuyến qua ví VNPAY</Form.Check.Label>
                     </Form.Check>
 
                     <Form.Check>
-                        <Form.Check.Input isValid name='payment' type='radio' id='offline' />
+                        <Form.Check.Input
+                            onChange={() => setPayMethod('02')}
+                            isValid
+                            name='payment'
+                            type='radio'
+                            id='offline'
+                            checked={payMethod === '02'}
+                        />
                         <Form.Check.Label htmlFor='offline'>Thanh toán khi nhận hàng</Form.Check.Label>
                     </Form.Check>
                 </Modal.Body>
 
                 <Modal.Footer className='justify-content-center'>
-                    <Button variant="outline-success" onClick={handleDelete}>
+                    <Button variant="outline-success" onClick={handleSubmit}>
                         OK
                     </Button>
                     <Button variant="outline-danger" onClick={handleClose}>

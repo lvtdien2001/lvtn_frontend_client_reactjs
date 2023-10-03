@@ -5,7 +5,7 @@ import axios from 'axios';
 import classNames from 'classnames/bind';
 import styles from './CartTable.module.scss';
 import { LoadingAnimation } from '../..';
-import { DeleteCartModal, PaymentModal } from '..';
+import { DeleteCartModal, PaymentModal, ChangeAddressModal } from '..';
 import { CartContext } from '../../../contexts';
 
 const cx = classNames.bind(styles);
@@ -15,11 +15,16 @@ const CartTable = ({ formatPrice, setMessage }) => {
     const [loading, setLoading] = useState(true);
     const [totalAmount, setTotalAmount] = useState(0);
     const [call, setCall] = useState(true);
+    const [addresses, setAddresses] = useState([]);
+    const [address, setAddress] = useState({});
+    const [paymentMethod, setPaymentMethod] = useState('');
+    const [reload, setReload] = useState(false);
     const { setNum, num } = useContext(CartContext);
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchApi = async () => {
+            setLoading(true);
             try {
                 const rsp = await axios.get(`${process.env.REACT_APP_API_URL}/cart`);
                 if (rsp.data.success) {
@@ -37,6 +42,25 @@ const CartTable = ({ formatPrice, setMessage }) => {
 
         fetchApi();
     }, [num, call])
+
+    useEffect(() => {
+        const fetchApi = async () => {
+            setLoading(true);
+            try {
+                const rsp = await axios.get(`${process.env.REACT_APP_API_URL}/address`);
+                if (rsp.data.success) {
+                    setAddresses(rsp.data.addresses);
+                    if (!address.fullName) {
+                        for (let i in rsp.data.addresses) {
+                            rsp.data.addresses[i]?.isDefault && setAddress(rsp.data.addresses[i]);
+                        }
+                    }
+                    setLoading(false);
+                };
+            } catch (error) { }
+        }
+        fetchApi();
+    }, [reload])
 
     const handleUpdateQuantity = async (type, quantity, cartId, productId) => {
         if (type === '-' && Number(quantity) === 1) {
@@ -58,6 +82,76 @@ const CartTable = ({ formatPrice, setMessage }) => {
                     content: rsp.data.msg
                 });
                 setCall(prev => !prev);
+            }
+        } catch (error) {
+            setMessage({
+                type: 'danger',
+                content: error.response?.data.msg || error.message
+            })
+        }
+    }
+
+    const handleSubmit = async () => {
+        if (paymentMethod === '') {
+            setMessage({
+                type: 'danger',
+                content: 'Bạn chưa chọn phương thức thanh toán'
+            });
+            return;
+        }
+        if (!address.fullName) {
+            setMessage({
+                type: 'danger',
+                content: 'Bạn chưa chọn địa chỉ giao hàng'
+            });
+            return;
+        }
+        try {
+            // products list
+            const products = [];
+            for (let i in carts) {
+                products.push({
+                    product: carts[i].product?._id,
+                    quantity: carts[i].quantity,
+                    price: carts[i].product?.price,
+                    name: carts[i].product?.name,
+                    imageUrl: carts[i].product?.image?.url
+                })
+            }
+
+            // submit data
+            const data = {
+                paymentMethod,
+                totalAmount,
+                address: {
+                    fullName: address.fullName,
+                    phoneNumber: address.phoneNumber,
+                    province: address.province?.name,
+                    district: address.district?.name,
+                    ward: address.ward?.name,
+                    description: address.description
+                },
+                products
+            }
+
+            // create order
+            const rspOrder = await axios.post(`${process.env.REACT_APP_API_URL}/order`, data);
+            let orderId;
+            if (rspOrder.data.success) {
+                orderId = rspOrder.data.newOrder._id;
+                await axios.delete(`${process.env.REACT_APP_API_URL}/cart`);
+                setNum(0);
+
+                if (paymentMethod === '01') {
+                    try {
+                        const rspPayment = await axios.post(`${process.env.REACT_APP_API_URL}/payment/create-vnp-url`, { amount: totalAmount, orderId });
+                        if (rspPayment.data.success) {
+                            window.location.assign(rspPayment.data.vnpUrl);
+                        }
+                    } catch (error) { }
+                } else if (paymentMethod === '02') {
+                    navigate(`/order/${rspOrder.data.newOrder?._id}`);
+                }
             }
         } catch (error) {
             setMessage({
@@ -135,7 +229,11 @@ const CartTable = ({ formatPrice, setMessage }) => {
                 <tr>
                     <td className='text-end' style={{ fontSize: '18px' }} colSpan={7}>
                         <b>Địa chỉ nhận hàng: </b>
-                        <span className={cx('text-blur')}>Đổi địa chỉ &#8594; </span>
+                        {address?.fullName && <span className='me-2'>
+                            {address.fullName}, {address.description}, {address.ward.name}, {address.district.name}, {address.province.name}
+                        </span>}
+                        {address?.isDefault && <Button className='me-2' size='sm' disabled variant='outline-danger'>Mặc định</Button>}
+                        <ChangeAddressModal setAddress={setAddress} checkedAddress={address} addresses={addresses} setReload={setReload} />
                     </td>
                 </tr>
                 <tr>
@@ -147,7 +245,11 @@ const CartTable = ({ formatPrice, setMessage }) => {
                 <tr>
                     <td className='text-end' style={{ fontSize: '18px' }} colSpan={7}>
                         <b>Phương thức thanh toán: </b>
-                        <PaymentModal />
+                        <span className='me-3'>
+                            {paymentMethod === '01' && 'Thanh toán trực tuyến qua ví VNPAY'}
+                            {paymentMethod === '02' && 'Thanh toán khi nhận hàng'}
+                        </span>
+                        <PaymentModal setPaymentMethod={setPaymentMethod} />
                     </td>
                 </tr>
                 <tr>
@@ -155,7 +257,7 @@ const CartTable = ({ formatPrice, setMessage }) => {
                         <b className='fs-5'>
                             Tổng thanh toán: <span className='text-danger'>{formatPrice(totalAmount)}</span>
                         </b>
-                        <Button className='ms-3' size='lg' variant="outline-success">
+                        <Button onClick={handleSubmit} className='ms-3' size='lg' variant="outline-success">
                             Mua hàng
                         </Button>
                     </td>
@@ -172,7 +274,17 @@ const CartTable = ({ formatPrice, setMessage }) => {
                 borderless
                 hover
             >
-                {body}
+                {carts?.length === 0 ?
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div className={`align-iems-center ${cx('empty')}`}>
+                                    <div>Chưa có sản phẩm nào</div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                    : body}
             </Table>}
         </>
     )
