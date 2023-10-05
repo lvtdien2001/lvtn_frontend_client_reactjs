@@ -1,3 +1,5 @@
 export { default as HotProducts } from './HotProducts'
 export { default as SuggestProducts } from './SuggestProducts'
 export { default as NewProducts } from './NewProducts'
+export { default as AllProducts } from './AllProducts'
+export { default as FilterProduct } from './FilterProduct'
