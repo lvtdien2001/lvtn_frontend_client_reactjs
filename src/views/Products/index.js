@@ -91,7 +91,7 @@ const Products = () => {
                         <FilterProduct filter={filter} setFilter={setFilter} brands={brands} />
                         <h5 className='text-secondary'><i>{countProducts} sản phẩm</i></h5>
                         <AllProducts formatName={formatName} formatPrice={formatPrice} setPage={setPage} products={products} />
-                        <Pagination page={page} setPage={setPage} lastPage={lastPage} align='justify-content-center' />
+                        {lastPage > 1 && <Pagination page={page} setPage={setPage} lastPage={lastPage} align='justify-content-center' />}
                     </>
                 }
             </Container>

@@ -1,5 +1,6 @@
 import { Nav, Navbar } from 'react-bootstrap';
 import logo from '../../../assets/images/logo.jpg';
+import { Link } from 'react-router-dom';
 
 const NavBar = () => {
     let nav = (
@@ -9,10 +10,10 @@ const NavBar = () => {
             navbarScroll
         >
             <Nav.Link href="#action1">THƯƠNG HIỆU</Nav.Link>
-            <Nav.Link href="#action2">NAM</Nav.Link>
-            <Nav.Link href="#action2">NỮ</Nav.Link>
-            <Nav.Link href="#action2">GIỚI THIỆU</Nav.Link>
-            <Nav.Link href="#action2">TIN TỨC</Nav.Link>
+            <Nav.Link as={Link} to='/product?gender=1'>NAM</Nav.Link>
+            <Nav.Link as={Link} to='/product?gender=2'>NỮ</Nav.Link>
+            <Nav.Link as={Link} to='/product?gender=0'>CẶP ĐÔI</Nav.Link>
+            <Nav.Link as={Link} to='/'>GIỚI THIỆU</Nav.Link>
         </Nav>
     )
 

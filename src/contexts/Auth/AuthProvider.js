@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import AuthContext from './AuthContext';
 import authReducer from '../../reducers/authReducer';
 import { LOCAL_STORAGE_TOKEN_NAME } from '../contants';
@@ -11,6 +11,7 @@ const AuthProvider = ({ children }) => {
         isAuthenticated: false,
         user: null
     })
+    const [reloadUser, setReloadUser] = useState(false);
 
     // Authenticate user
     const loadUser = async () => {
@@ -36,7 +37,7 @@ const AuthProvider = ({ children }) => {
         }
     }
 
-    useEffect(() => { loadUser() }, []);
+    useEffect(() => { loadUser() }, [reloadUser]);
 
     // Login
     const login = async (email, password) => {
@@ -69,7 +70,7 @@ const AuthProvider = ({ children }) => {
         setAuthToken(null);
     }
 
-    const authContextData = { login, logout, authState };
+    const authContextData = { login, logout, authState, setReloadUser };
 
     return (
         <AuthContext.Provider value={authContextData}>

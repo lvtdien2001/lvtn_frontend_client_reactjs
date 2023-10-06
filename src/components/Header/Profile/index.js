@@ -1,7 +1,8 @@
 import { useContext } from 'react';
 import { Dropdown } from 'react-bootstrap';
 import classNames from 'classnames/bind';
-import { AiOutlineLogout } from 'react-icons/ai';
+import { AiOutlineLogout, AiOutlineContacts } from 'react-icons/ai';
+import { FaRegAddressCard, FaHistory } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import styles from './Profile.module.scss';
 import defaultAvatar from '../../../assets/avatars/male.png';
@@ -25,15 +26,15 @@ const Profile = ({ user, logout }) => {
 
             <Dropdown.Menu>
                 <Link to='/address' className={cx('link')}>
-                    <Dropdown.Item as='div'>Quản lý địa chỉ</Dropdown.Item>
+                    <Dropdown.Item as='div'><FaRegAddressCard /> Quản lý địa chỉ</Dropdown.Item>
                 </Link>
 
-                <Link to='#' className={cx('link')}>
-                    <Dropdown.Item as='div'>Lịch sử giao dịch</Dropdown.Item>
+                <Link to='/history' className={cx('link')}>
+                    <Dropdown.Item as='div'><FaHistory /> Lịch sử giao dịch</Dropdown.Item>
                 </Link>
 
-                <Link to='#' className={cx('link')}>
-                    <Dropdown.Item as='div'>Hồ sơ người dùng</Dropdown.Item>
+                <Link to='/profile' className={cx('link')}>
+                    <Dropdown.Item as='div'><AiOutlineContacts /> Hồ sơ người dùng</Dropdown.Item>
                 </Link>
 
                 <Dropdown.Divider />

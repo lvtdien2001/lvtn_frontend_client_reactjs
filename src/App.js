@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Home, Login, NotFound, ProductDetail, Cart, Address, Payment, Products } from './views';
+import { Home, Login, NotFound, ProductDetail, Cart, Address, Payment, Products, Profile } from './views';
 import { Header, Footer, ProtectedRoute } from './components';
 
 function App() {
@@ -15,6 +15,7 @@ function App() {
                     <Route element={<ProtectedRoute><Cart /></ProtectedRoute>} path='/cart' />
                     <Route element={<ProtectedRoute><Address /></ProtectedRoute>} path='/address' />
                     <Route element={<ProtectedRoute><Payment /></ProtectedRoute>} path='/order/payment' />
+                    <Route element={<ProtectedRoute><Profile /></ProtectedRoute>} path='/profile' />
                     <Route element={<NotFound />} path='/*' />
                 </Routes>
                 <Footer />
