@@ -4,7 +4,7 @@ import App from './App';
 import 'bootstrap/dist/css/bootstrap.css';
 import reportWebVitals from './reportWebVitals';
 import { GlobalStyle } from './components';
-import { AuthProvider, CartProvider } from './contexts';
+import { AuthProvider, CartProvider, SearchProvider } from './contexts';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -12,7 +12,9 @@ root.render(
     <GlobalStyle>
         <AuthProvider>
             <CartProvider>
-                <App />
+                <SearchProvider>
+                    <App />
+                </SearchProvider>
             </CartProvider>
         </AuthProvider>
     </GlobalStyle>
