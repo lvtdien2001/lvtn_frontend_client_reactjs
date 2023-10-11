@@ -1,0 +1,28 @@
+.avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+}
+
+.star {
+    color: var(--bs-yellow);
+    margin: 0 1px;
+}
+
+.progress {
+    height: 10px;
+}
+
+.content {
+    border: solid 1px #b2b1b1;
+    border-radius: 10px;
+    padding: 10px;
+    max-height: 400px;
+    overflow: scroll;
+    overflow-x: hidden;
+    margin: 10px !important;
+}
+
+.general {
+    font-size: 13px;
+}

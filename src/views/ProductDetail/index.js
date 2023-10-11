@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { Row, Col, Container } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -6,7 +6,7 @@ import classNames from 'classnames/bind';
 import styles from './ProductDetail.module.scss';
 import { LoadingAnimation, Message } from '../../components';
 import { AddProductModal } from '../../components/Cart';
-import { SuggestProducts } from '../../components/Product';
+import { SuggestProducts, Comment } from '../../components/Product';
 
 const cx = classNames.bind(styles);
 
@@ -51,8 +51,7 @@ const ProductDetail = () => {
         <>
             <h3 className='text-primary text-center mb-3 mt-3'>{product.name}</h3>
             <Row className='mb-3'>
-                <Col lg={1}></Col>
-                <Col className='text-center' lg={4} xs={12}>
+                <Col className='text-center' lg={6} xs={12}>
                     <img src={product.image?.url} alt='Hinh anh san pham' width='100%' />
                 </Col>
                 <Col className={cx('par')} lg={6} xs={12}>
@@ -65,10 +64,13 @@ const ProductDetail = () => {
                     <p className={`mt-3 ${cx('text')}`}><b>Bộ máy:</b> {product.system?.name}</p>
                     <p className='text-danger fs-4 mt-3'><b>Đơn giá: {formatPrice(product.price)}</b></p>
                     <AddProductModal product={product} formatPrice={formatPrice} setMessage={setMessage} />
+                    <p className={`fs-5 ${cx('par')}`}><b>Mô tả:</b> {product.description}</p>
                 </Col>
             </Row>
             <Row>
-                <p className={`fs-5 ${cx('par')}`}><b>Mô tả:</b> {product.description}</p>
+                <Col className={`mb-3`} lg={6}>
+                    <Comment setMessage={setMessage} product={product} />
+                </Col>
             </Row>
         </>
     )
