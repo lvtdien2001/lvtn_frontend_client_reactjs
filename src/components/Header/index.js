@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { Button, Container, Navbar } from 'react-bootstrap';
 import { FaUserAlt } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { AuthContext } from '../../contexts';
 import NavBar from './NavBar';
 import InputSearch from './InputSearch';
@@ -14,9 +14,10 @@ const cx = classNames.bind(styles);
 
 const Header = () => {
     const { authState: { user, isAuthenticated }, logout } = useContext(AuthContext);
+    const location = useLocation();
 
     let login = (
-        <Link to='login'>
+        <Link to='/login'>
             <Button className='ms-2' variant='outline-success'>
                 <FaUserAlt /> Đăng nhập
             </Button>
@@ -24,7 +25,7 @@ const Header = () => {
     )
 
     return (
-        <>
+        <header>
             <div className={cx('nav-fixed')}>
                 <Navbar expand="lg" className={`bg-body-tertiary`}>
                     <Container className={`${cx('wrapper')}`} fluid>
@@ -35,8 +36,8 @@ const Header = () => {
                     </Container>
                 </Navbar>
             </div>
-            <div style={{ height: '80px' }}></div>
-        </>
+            {location.pathname !== '/login' && <div style={{ height: '80px' }}></div>}
+        </header>
     )
 }
 

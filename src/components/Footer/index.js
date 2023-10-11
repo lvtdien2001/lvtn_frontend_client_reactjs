@@ -26,11 +26,11 @@ const Footer = () => {
     )
 
     return (
-        <div className={cx('wrapper')}>
+        <footer className={cx('wrapper')}>
             <Container>
                 {body}
             </Container>
-        </div>
+        </footer>
     )
 }
 

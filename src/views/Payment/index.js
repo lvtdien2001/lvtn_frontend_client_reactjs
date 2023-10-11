@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
+import { Header, Footer } from '../../components';
 
 const Payment = () => {
     const [message, setMessage] = useState('');
@@ -17,12 +18,16 @@ const Payment = () => {
             }
         }
         fetchApi()
-    }, [])
+    }, [searchParams])
 
     return (
-        <Container style={{ minHeight: '440px' }}>
-            <h5 className='text-center text-danger'>{message}</h5>
-        </Container>
+        <>
+            <Header />
+            <Container style={{ minHeight: '440px' }}>
+                <h5 className='text-center text-danger'>{message}</h5>
+            </Container>
+            <Footer />
+        </>
     )
 }
 

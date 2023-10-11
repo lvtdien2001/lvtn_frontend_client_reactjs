@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';
-import { Message, LoadingAnimation, Pagination } from '../../components';
+import { Message, LoadingAnimation, Pagination, Header, Footer } from '../../components';
 import { AllProducts, FilterProduct } from '../../components/Product';
 import axios from 'axios';
 
@@ -58,6 +58,18 @@ const Products = () => {
     }, [page, filter])
 
     useEffect(() => {
+        const brand = searchParams.get('brand');
+        const gender = searchParams.get('gender');
+        setFilter(prev => {
+            return {
+                ...prev,
+                brand: brand || prev.brand,
+                gender: gender || prev.gender
+            }
+        })
+    }, [searchParams])
+
+    useEffect(() => {
         const fetchApi = async () => {
             setLoading(true);
             try {
@@ -68,23 +80,12 @@ const Products = () => {
                 }
             } catch (error) { }
         }
-
         fetchApi();
-
-        if (searchParams.get('brand')) {
-            setFilter(prev => {
-                return { ...prev, brand: searchParams.get('brand') }
-            })
-        };
-        if (searchParams.get('gender')) {
-            setFilter(prev => {
-                return { ...prev, gender: searchParams.get('gender') }
-            })
-        }
     }, [])
 
     return (
         <>
+            <Header />
             <Container className='mt-3'>
                 {loading ? <LoadingAnimation /> :
                     <>
@@ -96,6 +97,7 @@ const Products = () => {
                 }
             </Container>
             {message.content && <Message type={message.type} message={message.content} setMessage={setMessage} />}
+            <Footer />
         </>
     )
 }

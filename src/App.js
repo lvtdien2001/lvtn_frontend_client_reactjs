@@ -1,12 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Home, Login, NotFound, ProductDetail, Cart, Address, Payment, Products, Profile, Search } from './views';
-import { Header, Footer, ProtectedRoute } from './components';
+import { ProtectedRoute } from './components';
 
 function App() {
     return (
         <>
             <Router>
-                <Header />
                 <Routes>
                     <Route element={<Home />} path='/' />
                     <Route element={<Login />} path='/login' />
@@ -19,7 +18,6 @@ function App() {
                     <Route element={<ProtectedRoute><Profile /></ProtectedRoute>} path='/profile' />
                     <Route element={<NotFound />} path='/*' />
                 </Routes>
-                <Footer />
             </Router>
         </>
     );

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import classNames from 'classnames/bind';
 import styles from './Home.module.scss';
-import { ScrollBrands } from '../../components';
+import { ScrollBrands, Header, Footer } from '../../components';
 import { HotProducts, NewProducts } from '../../components/Product';
 
 const cx = classNames.bind(styles);
@@ -28,12 +28,14 @@ const Home = () => {
 
     return (
         <>
+            <Header />
             <div className={cx('ads')} ></div>
             <Container>
                 <ScrollBrands />
                 <HotProducts formatPrice={formatPrice} formatName={formatName} />
                 <NewProducts formatPrice={formatPrice} formatName={formatName} />
             </Container>
+            <Footer />
         </>
     )
 }

@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import classNames from 'classnames/bind';
 import styles from './ProductDetail.module.scss';
-import { LoadingAnimation, Message } from '../../components';
+import { LoadingAnimation, Message, Header, Footer } from '../../components';
 import { AddProductModal } from '../../components/Cart';
 import { SuggestProducts, Comment } from '../../components/Product';
 
@@ -77,11 +77,13 @@ const ProductDetail = () => {
 
     return (
         <>
+            <Header />
             <Container className={cx('wrapper')}>
                 {loading ? <LoadingAnimation /> : body}
                 {!loading && <SuggestProducts currentProduct={product} formatName={formatName} formatPrice={formatPrice} />}
             </Container>
             {message.content && <Message type={message.type} message={message.content} setMessage={setMessage} />}
+            <Footer />
         </>
     )
 }

@@ -1,14 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Button, Modal, Form, Row, Col, InputGroup } from 'react-bootstrap';
 import { VscAdd, VscNote } from 'react-icons/vsc';
 import { AiOutlineUser, AiTwotonePhone } from 'react-icons/ai';
 import { FaRegAddressCard } from 'react-icons/fa';
 import axios from 'axios';
+import { AuthContext } from '../../../contexts';
 
 const AddAddressModal = ({ setMessage, setReload }) => {
     const [show, setShow] = useState(false);
+    const { authState: { user } } = useContext(AuthContext);
     const [submitData, setSubmitData] = useState({
-        fullName: '', phoneNumber: '', province: { code: '', name: '' }, district: { code: '', name: '' }, ward: { code: '', name: '' }, description: ''
+        fullName: user.fullName, phoneNumber: user.phoneNumber, province: { code: '', name: '' }, district: { code: '', name: '' }, ward: { code: '', name: '' }, description: ''
     });
     const [isInvalid, setIsInvalid] = useState({
         fullName: false, phoneNumber: false, province: false, district: false, ward: false, description: false
@@ -140,6 +142,7 @@ const AddAddressModal = ({ setMessage, setReload }) => {
                             value={submitData.fullName}
                             onChange={e => setSubmitData(prev => { return { ...prev, fullName: e.target.value } })}
                             isInvalid={isInvalid.fullName}
+                            autoFocus
                         />
                         <Form.Control.Feedback className='text-end' type="invalid">
                             Họ và tên phải có ít nhất 5 ký tự

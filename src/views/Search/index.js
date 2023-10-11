@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
-import { LoadingAnimation, Pagination } from '../../components';
+import { LoadingAnimation, Pagination, Header, Footer } from '../../components';
 import { AllProducts, FilterProduct } from '../../components/Product';
 
 const Search = () => {
@@ -40,7 +40,7 @@ const Search = () => {
 
     const formatName = input => input.length < 25 ? input : (input.substring(0, 25) + ' ...');
 
-    useEffect(() => resetData(), [searchParams.get('key')]);
+    useEffect(() => resetData(), [searchParams]);
 
     useEffect(() => {
         let query = '';
@@ -64,7 +64,7 @@ const Search = () => {
         }
 
         fetchApi();
-    }, [searchParams.get('key'), page, filter])
+    }, [searchParams, page, filter])
 
     useEffect(() => {
         const fetchApi = async () => {
@@ -82,6 +82,7 @@ const Search = () => {
 
     return (
         <>
+            <Header />
             <Container className='mt-3'>
                 {loading ? <LoadingAnimation /> :
                     <>
@@ -93,6 +94,7 @@ const Search = () => {
                     </>
                 }
             </Container>
+            <Footer />
         </>
     )
 }

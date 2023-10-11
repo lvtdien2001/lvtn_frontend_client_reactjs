@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
-import { Message, LoadingAnimation } from '../../components';
+import { Message, LoadingAnimation, Header, Footer } from '../../components';
 import { AddAddressModal, AddressList } from '../../components/Address';
 
 const Address = () => {
@@ -26,18 +26,22 @@ const Address = () => {
     }, [reload])
 
     return (
-        <Container>
-            <Row className='justify-content-between mt-3 mb-3'>
-                <Col>
-                    <h4>Địa chỉ của tôi</h4>
-                </Col>
-                <Col className='text-end'>
-                    <AddAddressModal setMessage={setMessage} setReload={setReload} />
-                </Col>
-            </Row>
-            {loading ? <LoadingAnimation /> : <AddressList addresses={addresses} setMessage={setMessage} setReload={setReload} />}
-            {message.content && <Message type={message.type} message={message.content} setMessage={setMessage} />}
-        </Container>
+        <>
+            <Header />
+            <Container>
+                <Row className='justify-content-between mt-3 mb-3'>
+                    <Col>
+                        <h4>Địa chỉ của tôi</h4>
+                    </Col>
+                    <Col className='text-end'>
+                        <AddAddressModal setMessage={setMessage} setReload={setReload} />
+                    </Col>
+                </Row>
+                {loading ? <LoadingAnimation /> : <AddressList addresses={addresses} setMessage={setMessage} setReload={setReload} />}
+                {message.content && <Message type={message.type} message={message.content} setMessage={setMessage} />}
+            </Container>
+            <Footer />
+        </>
     )
 }
 

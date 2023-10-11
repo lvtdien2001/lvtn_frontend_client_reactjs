@@ -1,7 +1,7 @@
 export const genders = [
-    { code: 0, name: 'Cặp đôi' },
-    { code: 1, name: 'Nam' },
-    { code: 2, name: 'Nữ' }
+    { code: '0', name: 'Cặp đôi' },
+    { code: '1', name: 'Nam' },
+    { code: '2', name: 'Nữ' }
 ];
 
 export const systems = [

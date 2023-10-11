@@ -19,7 +19,7 @@ const NavBar = () => {
 
     return (
         <>
-            <Navbar.Brand href="/">
+            <Navbar.Brand as={Link} to="/">
                 <img src={logo} alt='logo' width='50px' height='50px' />
             </Navbar.Brand>
 

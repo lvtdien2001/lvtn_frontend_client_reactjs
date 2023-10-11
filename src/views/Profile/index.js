@@ -3,7 +3,7 @@ import { Container, Row, Col, InputGroup, Form, Button } from 'react-bootstrap';
 import classNames from 'classnames/bind';
 import axios from 'axios';
 import { BiShow, BiHide } from 'react-icons/bi';
-import { LoadingAnimation, Message } from '../../components';
+import { LoadingAnimation, Message, Header, Footer } from '../../components';
 import { AuthContext } from '../../contexts';
 import styles from './Profile.module.scss';
 import avatar from '../../assets/avatars/male.png';
@@ -260,6 +260,7 @@ const Profile = () => {
 
     return (
         <>
+            <Header />
             <Container>
                 <div className={cx('wrapper')}>
                     <h4>Hồ sơ của tôi</h4>
@@ -268,6 +269,7 @@ const Profile = () => {
                 </div>
             </Container>
             {message.content && <Message message={message.content} type={message.type} setMessage={setMessage} />}
+            <Footer />
         </>
     )
 }
