@@ -1,21 +1,20 @@
-import { useEffect, useState } from 'react';
-import { Container, Table, Row, Col } from 'react-bootstrap';
-import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Col, Container, Row, Table } from 'react-bootstrap';
+import { useParams, useNavigate } from 'react-router-dom';
 import { ImCheckboxChecked, ImCheckboxUnchecked } from 'react-icons/im';
 import axios from 'axios';
 import moment from 'moment';
 import classNames from 'classnames/bind';
+import styles from './Order.module.scss';
 import { Header, Footer, LoadingAnimation } from '../../components';
-import styles from './Payment.module.scss';
 
 const cx = classNames.bind(styles);
 
-const Payment = () => {
-    const [message, setMessage] = useState('');
+const Order = () => {
+    const { id } = useParams();
+    const navigate = useNavigate();
     const [order, setOrder] = useState({});
     const [loading, setLoading] = useState(true);
-    const [searchParams] = useSearchParams();
-    const navigate = useNavigate();
 
     const formatPrice = input => {
         const price = String(input);
@@ -30,28 +29,17 @@ const Payment = () => {
     }
 
     useEffect(() => {
-        const checksum = async () => {
-            try {
-                const rsp = await axios.get(`${process.env.REACT_APP_API_URL}/payment/vnp_ipn?${searchParams}`);
-                setMessage(rsp.data.msg);
-            } catch (error) {
-                setMessage(error.response?.data.msg || error.message);
-            }
-        }
-
         const getOrder = async () => {
             setLoading(true);
             try {
-                const orderId = searchParams.get('vnp_TxnRef');
-                const rsp = await axios.get(`${process.env.REACT_APP_API_URL}/order/${orderId}`);
+                const rsp = await axios.get(`${process.env.REACT_APP_API_URL}/order/${id}`);
                 setOrder(rsp.data.order);
                 setLoading(false);
             } catch (error) { }
         }
 
-        checksum();
         getOrder();
-    }, [searchParams])
+    }, [id]);
 
     let status = (
         <>
@@ -99,8 +87,20 @@ const Payment = () => {
         </>
     )
 
+    let cancel = (
+        <>
+            <Row className='fs-5 text-danger mb-3'>
+                <Col>
+                    Trạng thái đơn hàng: {order.status?.name}<br />
+                    Lý do: {order.cancelReason}
+                </Col>
+            </Row>
+        </>
+    )
+
     let body = (
         <>
+            {Number(order.status?.code) < 5 ? status : cancel}
             <p>
                 <b>Tên khách hàng: </b>
                 <>{order.address?.fullName}</>
@@ -150,13 +150,10 @@ const Payment = () => {
     return (
         <>
             <Header />
-            <Container className={`mb-3 mt-3 ${cx('wrapper')}`}>
-                <div onClick={() => navigate('/product')} style={{ cursor: 'pointer' }} className='ms-2 text-primary'>
-                    <h5>&#8617; Tiếp tục mua hàng</h5>
+            <Container className={cx('wrapper')} >
+                <div className='ms-2 text-primary mb-3 fs-5'>
+                    <b style={{ cursor: 'pointer' }} onClick={() => navigate(-1)}>&#8617; Quay lại</b>
                 </div>
-                <h3 className='text-center mt-3 mb-3'>THÔNG TIN ĐƠN HÀNG</h3>
-                <h5 className='text-center mb-3 text-danger'>{message}</h5>
-                {!loading && status}
                 {loading ? <LoadingAnimation /> : body}
             </Container>
             <Footer />
@@ -164,4 +161,4 @@ const Payment = () => {
     )
 }
 
-export default Payment
+export default Order
