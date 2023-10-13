@@ -24,7 +24,7 @@ const AddressList = ({ addresses, setMessage, setReload }) => {
                             <td className='text-end'>
                                 <p>
                                     <UpdateAddressModal setMessage={setMessage} setReload={setReload} address={address} />
-                                    <DeleteAddressModal setReload={setReload} setMessage={setMessage} addressId={address._id} />
+                                    <DeleteAddressModal setReload={setReload} setMessage={setMessage} address={address} />
                                 </p>
                                 {!address.isDefault && <ChangeDefaultAddress setReload={setReload} id={address._id} setMessage={setMessage} />}
                             </td>

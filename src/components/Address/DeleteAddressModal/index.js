@@ -2,15 +2,22 @@ import { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import axios from 'axios';
 
-const DeleteAddressModal = ({ setMessage, addressId, setReload }) => {
+const DeleteAddressModal = ({ setMessage, address, setReload }) => {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
     const handleDelete = async () => {
+        if (address.isDefault) {
+            setMessage({
+                type: 'danger',
+                content: 'Không thể xóa địa chỉ mặc định'
+            });
+            return;
+        }
         try {
-            const rsp = await axios.delete(`${process.env.REACT_APP_API_URL}/address/${addressId}`);
+            const rsp = await axios.delete(`${process.env.REACT_APP_API_URL}/address/${address._id}`);
             if (rsp.data.success) {
                 setMessage({
                     type: 'success',
