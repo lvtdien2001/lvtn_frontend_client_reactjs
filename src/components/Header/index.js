@@ -36,7 +36,7 @@ const Header = () => {
                     </Container>
                 </Navbar>
             </div>
-            {location.pathname !== '/login' && <div style={{ height: '80px' }}></div>}
+            {location.pathname !== '/login' && <div className={cx('bg')}></div>}
         </header>
     )
 }

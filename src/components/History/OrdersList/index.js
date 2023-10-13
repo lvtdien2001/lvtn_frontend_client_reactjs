@@ -1,7 +1,8 @@
 import { ListGroup, Row, Col, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { CancelModal, GoodsReceived, RatingModal } from '..';
 
-const OrdersList = ({ orders, formatPrice }) => {
+const OrdersList = ({ orders, formatPrice, setMessage, setReload }) => {
 
     let body = (
         <>
@@ -37,11 +38,9 @@ const OrdersList = ({ orders, formatPrice }) => {
                             </ListGroup.Item>
 
                             <ListGroup.Item className='text-end'>
-                                {Number(order.status?.code) === 1 &&
-                                    <Button variant='danger'>
-                                        Hủy đơn hàng
-                                    </Button>
-                                }
+                                {Number(order.status?.code) === 1 && <CancelModal orderId={order._id} setMessage={setMessage} setReload={setReload} />}
+                                {Number(order.status?.code) === 3 && <GoodsReceived orderId={order._id} setMessage={setMessage} setReload={setReload} />}
+                                {Number(order.status?.code) === 4 && <RatingModal products={order.products} />}
                             </ListGroup.Item>
                         </ListGroup>
                     </div>
@@ -51,9 +50,9 @@ const OrdersList = ({ orders, formatPrice }) => {
     )
 
     return (
-        <>
+        <div style={{ minHeight: '404px' }}>
             {body}
-        </>
+        </div>
     )
 }
 

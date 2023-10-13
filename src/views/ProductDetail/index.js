@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Row, Col, Container } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import classNames from 'classnames/bind';
 import styles from './ProductDetail.module.scss';
@@ -15,6 +15,7 @@ const ProductDetail = () => {
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState({ type: '', content: '' });
     const { id } = useParams();
+    const navigate = useNavigate();
 
     const formatPrice = input => {
         const price = String(input);
@@ -79,6 +80,9 @@ const ProductDetail = () => {
         <>
             <Header />
             <Container className={cx('wrapper')}>
+                <div className='ms-2 text-primary mb-3 fs-5'>
+                    <b style={{ cursor: 'pointer' }} onClick={() => navigate(-1)}>&#8617; Quay lại</b>
+                </div>
                 {loading ? <LoadingAnimation /> : body}
                 {!loading && <SuggestProducts currentProduct={product} formatName={formatName} formatPrice={formatPrice} />}
             </Container>

@@ -261,7 +261,7 @@ const Profile = () => {
     return (
         <>
             <Header />
-            <Container>
+            <Container className='mb-3'>
                 <div className={cx('wrapper')}>
                     <h4>Hồ sơ của tôi</h4>
                     <h6 className='text-secondary mb-3'>Quản lý thông tin hồ sơ để bảo mật tài khoản</h6>

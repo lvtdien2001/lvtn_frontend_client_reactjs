@@ -31,11 +31,13 @@ const Cart = () => {
         <>
             <Header />
             <Container>
-                <h3 className='text-center mt-3'>GIỎ HÀNG CỦA BẠN</h3>
-                <div onClick={() => navigate('/product')} style={{ cursor: 'pointer' }} className='ms-2 text-primary'>
-                    <h5>&#8617; Tiếp tục mua hàng</h5>
+                <div className='mb-3' style={{ backgroundColor: '#fff', padding: '20px' }}>
+                    <h3 className='text-center mt-3'>GIỎ HÀNG CỦA BẠN</h3>
+                    <div onClick={() => navigate('/product')} style={{ cursor: 'pointer' }} className='ms-2 text-primary'>
+                        <h5>&#8617; Tiếp tục mua hàng</h5>
+                    </div>
+                    <CartTable setMessage={setMessage} formatPrice={formatPrice} />
                 </div>
-                <CartTable setMessage={setMessage} formatPrice={formatPrice} />
                 <HotProducts formatName={formatName} formatPrice={formatPrice} />
                 {message.content && <Message type={message.type} message={message.content} setMessage={setMessage} />}
             </Container>

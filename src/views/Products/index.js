@@ -86,7 +86,7 @@ const Products = () => {
     return (
         <>
             <Header />
-            <Container className='mt-3'>
+            <Container style={{ backgroundColor: '#fff', padding: '20px' }} className='mt-3 mb-3'>
                 {loading ? <LoadingAnimation /> :
                     <>
                         <FilterProduct filter={filter} setFilter={setFilter} brands={brands} />

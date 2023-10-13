@@ -12,12 +12,10 @@
 }
 
 .empty {
-    min-height: 200px;
     border: solid 1px #333;
     border-radius: 10px;
-    text-align: center;
-    padding-top: 75px;
-    background-color: var(--bs-light);
-    font-size: 20px;
-    font-weight: 500;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    min-height: 200px;
 }

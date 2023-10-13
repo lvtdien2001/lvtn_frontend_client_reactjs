@@ -7,6 +7,7 @@ import styles from './CartTable.module.scss';
 import { LoadingAnimation } from '../..';
 import { DeleteCartModal, PaymentModal, ChangeAddressModal } from '..';
 import { CartContext } from '../../../contexts';
+import cartIcon from '../../../assets/images/order.jpg';
 
 const cx = classNames.bind(styles);
 
@@ -278,8 +279,11 @@ const CartTable = ({ formatPrice, setMessage }) => {
                     <tbody>
                         <tr>
                             <td>
-                                <div className={`align-iems-center ${cx('empty')}`}>
-                                    <div>Chưa có sản phẩm nào</div>
+                                <div className={`${cx('empty')}`}>
+                                    <div className='text-center'>
+                                        <img src={cartIcon} alt='' width='70px' />
+                                        <p className='fs-5 text-secondary'>Chưa có sản phẩm nào</p>
+                                    </div>
                                 </div>
                             </td>
                         </tr>

@@ -2,9 +2,15 @@
     background-color: #f0ecec !important;
 }
 
-.nav-fixed {
-    position: fixed;
-    top: 0px;
-    z-index: 1000;
-    width: 100%;
+@media only screen and (min-width: 650px) {
+    .nav-fixed {
+        position: fixed;
+        top: 0px;
+        z-index: 1000;
+        width: 100%;
+    }
+
+    .bg {
+        height: 80px;
+    }
 }

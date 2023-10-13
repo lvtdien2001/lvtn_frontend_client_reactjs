@@ -25,6 +25,8 @@ const Address = () => {
         fetchApi();
     }, [reload])
 
+    useEffect(() => { document.title = 'Địa chỉ của tôi' }, [])
+
     return (
         <>
             <Header />

@@ -60,28 +60,20 @@ const Order = () => {
 
             <Row className={`text-center mb-3 ${cx('status')}`}>
                 <Col className={Number(order.status?.code) >= 1 ? 'text-success' : 'text-secondary'}>
-                    <p>
-                        {Number(order.status?.code) >= 1 ? <ImCheckboxChecked /> : <ImCheckboxUnchecked />}
-                        <div className={`${Number(order.status?.code) >= 1 ? 'bg-success' : 'bg-secondary'} ${cx('progress-bar')}`}></div>
-                    </p>
+                    {Number(order.status?.code) >= 1 ? <ImCheckboxChecked /> : <ImCheckboxUnchecked />}
+                    <div className={`${Number(order.status?.code) >= 1 ? 'bg-success' : 'bg-secondary'} ${cx('progress-bar')}`}></div>
                 </Col>
                 <Col className={Number(order.status?.code) >= 2 ? 'text-success' : 'text-secondary'}>
-                    <p>
-                        {Number(order.status?.code) >= 2 ? <ImCheckboxChecked /> : <ImCheckboxUnchecked />}
-                        <div className={`${Number(order.status?.code) >= 2 ? 'bg-success' : 'bg-secondary'} ${cx('progress-bar')}`}></div>
-                    </p>
+                    {Number(order.status?.code) >= 2 ? <ImCheckboxChecked /> : <ImCheckboxUnchecked />}
+                    <div className={`${Number(order.status?.code) >= 2 ? 'bg-success' : 'bg-secondary'} ${cx('progress-bar')}`}></div>
                 </Col>
                 <Col className={Number(order.status?.code) >= 3 ? 'text-success' : 'text-secondary'}>
-                    <p>
-                        {Number(order.status?.code) >= 3 ? <ImCheckboxChecked /> : <ImCheckboxUnchecked />}
-                        <div className={`${Number(order.status?.code) >= 3 ? 'bg-success' : 'bg-secondary'} ${cx('progress-bar')}`}></div>
-                    </p>
+                    {Number(order.status?.code) >= 3 ? <ImCheckboxChecked /> : <ImCheckboxUnchecked />}
+                    <div className={`${Number(order.status?.code) >= 3 ? 'bg-success' : 'bg-secondary'} ${cx('progress-bar')}`}></div>
                 </Col>
                 <Col className={Number(order.status?.code) >= 4 ? 'text-success' : 'text-secondary'}>
-                    <p>
-                        {Number(order.status?.code) >= 4 ? <ImCheckboxChecked /> : <ImCheckboxUnchecked />}
-                        <div className={`${Number(order.status?.code) >= 4 ? 'bg-success' : 'bg-secondary'} ${cx('progress-bar')}`}></div>
-                    </p>
+                    {Number(order.status?.code) >= 4 ? <ImCheckboxChecked /> : <ImCheckboxUnchecked />}
+                    <div className={`${Number(order.status?.code) >= 4 ? 'bg-success' : 'bg-secondary'} ${cx('progress-bar')}`}></div>
                 </Col>
             </Row>
         </>

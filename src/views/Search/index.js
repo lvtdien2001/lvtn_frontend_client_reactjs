@@ -83,7 +83,7 @@ const Search = () => {
     return (
         <>
             <Header />
-            <Container className='mt-3'>
+            <Container style={{ backgroundColor: '#fff', padding: '20px' }} className='mt-3 mb-3'>
                 {loading ? <LoadingAnimation /> :
                     <>
                         <h5 className='text-secondary mb-3'><i>Kết quả tìm kiếm: {searchParams.get('key')}</i></h5>

@@ -10,13 +10,13 @@ const Footer = () => {
     let body = (
         <Row>
             <Col className='mb-1' lg={4} xs={12}>
-                <h5>HÂN HẠNH ĐƯỢC PHỤC VỤ QUÝ KHÁCH</h5><br />
+                <h5 className='mt-3'>HÂN HẠNH ĐƯỢC PHỤC VỤ QUÝ KHÁCH</h5>
                 <FaLocationDot /> Địa chỉ: số 112, Trần Hưng Đạo, Ninh Kiều, Cần Thơ <br />
                 <FaPhoneFlip /> Điện thoại: 0392 313 131 - 0909 252 525 <br />
                 &copy; Coppyright 2023 Lê Văn Thanh Điền
             </Col>
             <Col lg={4} xs={12}>
-                <h5>LIÊN HỆ CHÚNG TÔI</h5><br />
+                <h5 className='mt-3'>LIÊN HỆ CHÚNG TÔI</h5>
                 <FaFacebook /> Facebook: <Link to='https://www.facebook.com/vuthanhdien.tahmkench'>https://www.facebook.com/</Link> <br />
                 <FaSkype /> Skype: <Link to='#'>https://www.skype.com/</Link> <br />
                 <FaInstagram /> Instagram: <Link to='#'>https://www.instagram.com/</Link>

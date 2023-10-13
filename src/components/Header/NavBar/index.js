@@ -1,15 +1,52 @@
-import { Nav, Navbar } from 'react-bootstrap';
-import logo from '../../../assets/images/logo.jpg';
+import { useEffect, useState } from 'react';
+import { Button, Nav, NavDropdown, Navbar } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { LoadingAnimation } from '../..';
+import logo from '../../../assets/images/logo.jpg';
 
 const NavBar = () => {
+    const [brands, setBrands] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchApi = async () => {
+            try {
+                setLoading(true);
+                const rsp = await axios.get(`${process.env.REACT_APP_API_URL}/brand`);
+                setBrands(rsp.data.brands);
+                setLoading(false);
+            } catch (error) { }
+        }
+        fetchApi();
+    }, [])
+
     let nav = (
         <Nav
             className="me-auto my-2 my-lg-0"
             style={{ maxHeight: '100px' }}
             navbarScroll
         >
-            <Nav.Link href="#action1">THƯƠNG HIỆU</Nav.Link>
+            <NavDropdown title='THƯƠNG HIỆU'>
+                <div style={{ maxHeight: '400px', overflow: 'scroll', overflowX: 'hidden' }}>
+                    {loading ? <LoadingAnimation /> :
+                        brands.map(brand => {
+                            return (
+                                <NavDropdown.Item as='div'>
+                                    <Button
+                                        className='mb-1'
+                                        size='sm'
+                                        variant='outline-dark'
+                                        key={brand._id}
+                                    >
+                                        <Link to={`/product?brand=${brand._id}`}><img alt='' src={brand.logo?.url} width='100px' /></Link>
+                                    </Button>
+                                </NavDropdown.Item>
+                            )
+                        })
+                    }
+                </div>
+            </NavDropdown>
             <Nav.Link as={Link} to='/product?gender=1'>NAM</Nav.Link>
             <Nav.Link as={Link} to='/product?gender=2'>NỮ</Nav.Link>
             <Nav.Link as={Link} to='/product?gender=0'>CẶP ĐÔI</Nav.Link>

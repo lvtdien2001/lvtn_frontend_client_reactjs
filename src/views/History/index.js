@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import axios from 'axios';
 import classNames from 'classnames/bind';
-import { Header, Footer, LoadingAnimation } from '../../components';
-import { OrdersList, FilterOrder } from '../../components/History';
+import { Header, Footer, LoadingAnimation, Message } from '../../components';
+import { OrdersList, FilterOrder, Empty } from '../../components/History';
 import styles from './History.module.scss';
 
 const cx = classNames.bind(styles);
@@ -12,6 +12,8 @@ const History = () => {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [filter, setFilter] = useState('');
+    const [reload, setReload] = useState(false);
+    const [message, setMessage] = useState({ type: '', content: '' });
 
     const formatPrice = input => {
         const price = String(input);
@@ -36,16 +38,23 @@ const History = () => {
         }
 
         getOrders();
-    }, [filter])
+    }, [filter, reload])
 
     return (
         <>
             <Header />
             <Container className={cx('wrapper')}>
                 {!loading && <FilterOrder filter={filter} setFilter={setFilter} />}
-                {loading ? <LoadingAnimation /> : <OrdersList orders={orders} formatPrice={formatPrice} />}
+                {loading ?
+                    <LoadingAnimation /> :
+                    (orders.length > 0 ?
+                        <OrdersList orders={orders} formatPrice={formatPrice} setMessage={setMessage} setReload={setReload} /> :
+                        <Empty />
+                    )
+                }
             </Container>
             <Footer />
+            {message.content && <Message message={message.content} type={message.type} setMessage={setMessage} />}
         </>
     )
 }
