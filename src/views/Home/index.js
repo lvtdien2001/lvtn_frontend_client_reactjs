@@ -16,7 +16,7 @@ const Home = () => {
         return priceFormat.reverse().join('.') + ' đ';
     }
 
-    const formatName = input => input.length < 25 ? input : (input.substring(0, 25) + ' ...');
+    const formatName = input => input.length < 25 ? input : (input.substring(0, 24) + ' ...');
 
     useEffect(() => {
         document.title = 'Trang chủ'

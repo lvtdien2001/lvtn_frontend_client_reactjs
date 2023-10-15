@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';
 import { Message, LoadingAnimation, Pagination, Header, Footer } from '../../components';
-import { AllProducts, FilterProduct } from '../../components/Product';
+import { AllProducts, FilterProduct, EmptyProducts } from '../../components/Product';
 import axios from 'axios';
 
 const Products = () => {
@@ -15,8 +15,16 @@ const Products = () => {
     })
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(true);
-    const [lastPage, setLastPage] = useState(0);
+    const [lastPage, setLastPage] = useState(1);
     const [searchParams] = useSearchParams();
+
+    const resetData = () => {
+        setFilter({
+            brand: '', gender: '', price: '', system: '', style: '', glass: '', strap: ''
+        });
+        setPage(1);
+        setLastPage(1);
+    }
 
     const formatPrice = input => {
         const price = String(input);
@@ -58,8 +66,14 @@ const Products = () => {
     }, [page, filter])
 
     useEffect(() => {
+        setPage(1);
+        setLastPage(1);
+    }, [filter]);
+
+    useEffect(() => {
         const brand = searchParams.get('brand');
         const gender = searchParams.get('gender');
+        resetData();
         setFilter(prev => {
             return {
                 ...prev,
@@ -89,14 +103,43 @@ const Products = () => {
             <Container style={{ backgroundColor: '#fff', padding: '20px' }} className='mt-3 mb-3'>
                 {loading ? <LoadingAnimation /> :
                     <>
-                        <FilterProduct filter={filter} setFilter={setFilter} brands={brands} />
-                        <h5 className='text-secondary'><i>{countProducts} sản phẩm</i></h5>
-                        <AllProducts formatName={formatName} formatPrice={formatPrice} setPage={setPage} products={products} />
-                        {lastPage > 1 && <Pagination page={page} setPage={setPage} lastPage={lastPage} align='justify-content-center' />}
+                        <FilterProduct
+                            filter={filter}
+                            setFilter={setFilter}
+                            brands={brands}
+                            resetData={resetData}
+                        />
+
+                        <h5 className='text-secondary'>
+                            <i>{countProducts} sản phẩm</i>
+                        </h5>
+
+                        {products.length === 0 ? <EmptyProducts /> :
+                            <AllProducts
+                                formatName={formatName}
+                                formatPrice={formatPrice}
+                                setPage={setPage}
+                                products={products}
+                            />}
+
+                        {lastPage > 1 &&
+                            <Pagination
+                                page={page}
+                                setPage={setPage}
+                                lastPage={lastPage}
+                                align='justify-content-center'
+                            />
+                        }
                     </>
                 }
             </Container>
-            {message.content && <Message type={message.type} message={message.content} setMessage={setMessage} />}
+            {message.content &&
+                <Message
+                    type={message.type}
+                    message={message.content}
+                    setMessage={setMessage}
+                />
+            }
             <Footer />
         </>
     )

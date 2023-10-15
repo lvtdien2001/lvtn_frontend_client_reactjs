@@ -38,7 +38,7 @@ const ScrollBrands = () => {
                         key={brand._id}
                     >
                         <Link className={cx('link')} to={`/product?brand=${brand._id}`}>
-                            <img src={brand.logo?.url} alt='logo' width='160px' height='35px' />
+                            <img src={brand.logo?.url} alt='logo' width='120px' height='30px' />
                         </Link>
                     </Button>
                 )

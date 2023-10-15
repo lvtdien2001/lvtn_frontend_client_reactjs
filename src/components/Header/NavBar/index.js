@@ -28,11 +28,11 @@ const NavBar = () => {
             navbarScroll
         >
             <NavDropdown title='THƯƠNG HIỆU'>
-                <div style={{ maxHeight: '400px', overflow: 'scroll', overflowX: 'hidden' }}>
+                <div style={{ maxHeight: '400px', overflow: 'scroll', overflowX: 'hidden', zIndex: '10000' }}>
                     {loading ? <LoadingAnimation /> :
                         brands.map(brand => {
                             return (
-                                <NavDropdown.Item as='div'>
+                                <NavDropdown.Item key={brand._id} as='div'>
                                     <Button
                                         className='mb-1'
                                         size='sm'

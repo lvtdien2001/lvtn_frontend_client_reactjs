@@ -3,7 +3,7 @@ import { Row, Col, Dropdown, Button } from 'react-bootstrap';
 import { BiFilterAlt } from 'react-icons/bi';
 import { genders, systems, glasses, straps, prices } from './contants';
 
-const FilterProduct = ({ brands, setFilter, filter }) => {
+const FilterProduct = ({ brands, setFilter, filter, resetData }) => {
     const [show, setShow] = useState({
         brand: false, gender: false, system: false, glass: false, strap: false, price: false
     })
@@ -43,6 +43,8 @@ const FilterProduct = ({ brands, setFilter, filter }) => {
         <Dropdown show={show.brand}>
             <Dropdown.Toggle
                 variant='outline-success'
+                active={filter.brand}
+                className='mb-1'
                 style={{ width: '130px' }}
                 onClick={() => setShow(prev => { return { ...prev, brand: !prev.brand } })}
             >
@@ -74,6 +76,8 @@ const FilterProduct = ({ brands, setFilter, filter }) => {
             <Dropdown.Toggle
                 variant='outline-success'
                 style={{ width: '130px' }}
+                className='mb-1'
+                active={filter.gender}
                 onClick={() => setShow(prev => { return { ...prev, gender: !prev.gender } })}
             >
                 Giới tính
@@ -103,6 +107,8 @@ const FilterProduct = ({ brands, setFilter, filter }) => {
             <Dropdown.Toggle
                 variant='outline-success'
                 style={{ width: '130px' }}
+                active={filter.system}
+                className='mb-1'
                 onClick={() => setShow(prev => { return { ...prev, system: !prev.system } })}
             >
                 Bộ máy
@@ -132,6 +138,8 @@ const FilterProduct = ({ brands, setFilter, filter }) => {
             <Dropdown.Toggle
                 variant='outline-success'
                 style={{ width: '130px' }}
+                active={filter.glass}
+                className='mb-1'
                 onClick={() => setShow(prev => { return { ...prev, glass: !prev.glass } })}
             >
                 Mặt kính
@@ -161,6 +169,8 @@ const FilterProduct = ({ brands, setFilter, filter }) => {
             <Dropdown.Toggle
                 variant='outline-success'
                 style={{ width: '130px' }}
+                active={filter.strap}
+                className='mb-1'
                 onClick={() => setShow(prev => { return { ...prev, strap: !prev.strap } })}
             >
                 Dây đeo
@@ -191,6 +201,8 @@ const FilterProduct = ({ brands, setFilter, filter }) => {
                 variant='outline-success'
                 style={{ width: '130px' }}
                 onClick={() => setShow(prev => { return { ...prev, price: !prev.price } })}
+                active={filter.price}
+                className='mb-1'
             >
                 Đơn giá
             </Dropdown.Toggle>
@@ -218,6 +230,17 @@ const FilterProduct = ({ brands, setFilter, filter }) => {
         <Row className='align-items-center'>
             <Col><h5>Bộ lọc <BiFilterAlt />:</h5></Col>
             <Col>
+                <Button
+                    onClick={resetData}
+                    variant='outline-success'
+                    style={{ width: '130px' }}
+                    className='mb-1'
+                    active={!filter.brand && !filter.gender && !filter.price && !filter.glass && !filter.strap && !filter.system}
+                >
+                    Tất cả
+                </Button>
+            </Col>
+            <Col>
                 {filterBrands}
             </Col>
             <Col>
@@ -235,7 +258,6 @@ const FilterProduct = ({ brands, setFilter, filter }) => {
             <Col>
                 {filterStrap}
             </Col>
-            <Col lg={2}></Col>
         </Row>
     )
 }
