@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Home, Login, NotFound, ProductDetail, Cart, Address, Payment, Products, Profile, Search, History, Order } from './views';
-import { ProtectedRoute } from './components';
+import { ProtectedRoute, Chatbot } from './components';
 
 function App() {
     return (
@@ -20,6 +20,7 @@ function App() {
                     <Route element={<ProtectedRoute><Order /></ProtectedRoute>} path='/order/:id' />
                     <Route element={<NotFound />} path='/*' />
                 </Routes>
+                <Chatbot />
             </Router>
         </>
     );

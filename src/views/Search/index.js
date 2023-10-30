@@ -19,8 +19,8 @@ const Search = () => {
 
     const resetData = () => {
         setPage(1);
-        setLastPage(0);
-        setCountProducts(0);
+        setLastPage(1);
+        // setCountProducts(0);
         setFilter({
             brand: '', gender: '', price: '', system: '', style: '', glass: '', strap: ''
         })
@@ -39,6 +39,11 @@ const Search = () => {
     }
 
     const formatName = input => input.length < 25 ? input : (input.substring(0, 25) + ' ...');
+
+    useEffect(() => {
+        setPage(1);
+        setLastPage(1);
+    }, [filter]);
 
     useEffect(() => resetData(), [searchParams]);
 
@@ -87,10 +92,27 @@ const Search = () => {
                 {loading ? <LoadingAnimation /> :
                     <>
                         <h5 className='text-secondary mb-3'><i>Kết quả tìm kiếm: {searchParams.get('key')}</i></h5>
-                        <FilterProduct filter={filter} setFilter={setFilter} brands={brands} />
+                        <FilterProduct
+                            filter={filter}
+                            setFilter={setFilter}
+                            brands={brands}
+                            resetData={resetData}
+                        />
                         <h5 className='text-secondary mt-3'><i>{countProducts} sản phẩm</i></h5>
-                        <AllProducts formatName={formatName} formatPrice={formatPrice} setPage={setPage} products={products} />
-                        {lastPage > 1 && <Pagination page={page} setPage={setPage} lastPage={lastPage} align='justify-content-center' />}
+                        <AllProducts
+                            formatName={formatName}
+                            formatPrice={formatPrice}
+                            setPage={setPage}
+                            products={products}
+                        />
+                        {lastPage > 1 &&
+                            <Pagination
+                                page={page}
+                                setPage={setPage}
+                                lastPage={lastPage}
+                                align='justify-content-center'
+                            />
+                        }
                     </>
                 }
             </Container>
