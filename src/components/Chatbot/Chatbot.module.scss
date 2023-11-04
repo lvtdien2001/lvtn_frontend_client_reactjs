@@ -58,7 +58,7 @@
 
 .text-customer {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
 }
 
 .form {
@@ -76,7 +76,7 @@
 
 .loading {
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     color: var(--bs-gray);
     font-size: 16px;
     position: absolute;

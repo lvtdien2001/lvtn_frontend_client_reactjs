@@ -1,0 +1,21 @@
+.wrapper {
+    // display: flex;
+    // overflow: scroll;
+    // overflow-y: hidden;
+    // background-color: #fff;
+
+    margin: 10px 0;
+}
+
+.link {
+    text-decoration: none;
+}
+
+.img-brand {
+    border: solid 1px #b8b5b5;
+    cursor: pointer;
+
+    &:hover {
+        border: #333 solid 2px;
+    }
+}

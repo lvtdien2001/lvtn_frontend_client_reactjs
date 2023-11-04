@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { HotProducts } from '../../components/Product';
 import { CartTable } from '../../components/Cart';
 import { Message, Header, Footer } from '../../components';
+import { Nav, NavBreadCrumb, NavLink } from '../../components/Nav';
 
 const Cart = () => {
     const [message, setMessage] = useState({ type: '', content: '' });
@@ -31,15 +32,39 @@ const Cart = () => {
         <>
             <Header />
             <Container>
-                <div className='mb-3' style={{ backgroundColor: '#fff', padding: '20px' }}>
-                    <h3 className='text-center mt-3'>GIỎ HÀNG CỦA BẠN</h3>
-                    <div onClick={() => navigate('/product')} style={{ cursor: 'pointer' }} className='ms-2 text-primary'>
+                <Nav>
+                    <NavLink to='/'>TRANG CHỦ</NavLink>
+                    <NavBreadCrumb />
+                    <NavLink to='#'>GIỎ HÀNG</NavLink>
+                </Nav>
+
+                <div
+                    className='mb-3'
+                    style={{ borderBottom: 'solid 1px var(--bs-gray-300)' }}
+                >
+                    <h3 className='text-center text-secondary mt-3'>
+                        GIỎ HÀNG CỦA BẠN
+                    </h3>
+                    <div
+                        onClick={() => navigate('/product')}
+                        style={{ cursor: 'pointer' }}
+                        className='ms-2 text-primary'
+                    >
                         <h5>&#8617; Tiếp tục mua hàng</h5>
                     </div>
-                    <CartTable setMessage={setMessage} formatPrice={formatPrice} />
+                    <CartTable
+                        setMessage={setMessage}
+                        formatPrice={formatPrice}
+                    />
                 </div>
                 <HotProducts formatName={formatName} formatPrice={formatPrice} />
-                {message.content && <Message type={message.type} message={message.content} setMessage={setMessage} />}
+                {message.content &&
+                    <Message
+                        type={message.type}
+                        message={message.content}
+                        setMessage={setMessage}
+                    />
+                }
             </Container>
             <Footer />
         </>

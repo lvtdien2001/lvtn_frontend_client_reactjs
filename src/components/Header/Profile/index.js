@@ -19,7 +19,10 @@ const Profile = ({ user, logout }) => {
     }
 
     return (
-        <Dropdown align='end' className='ms-2'>
+        <Dropdown
+            align='end'
+            className='ms-2'
+        >
             <Dropdown.Toggle variant="outline-success">
                 <img className={cx('avatar')} src={user?.avatar.url || defaultAvatar} alt='' />
             </Dropdown.Toggle>

@@ -7,6 +7,7 @@ import moment from 'moment';
 import classNames from 'classnames/bind';
 import { Header, Footer, LoadingAnimation } from '../../components';
 import styles from './Payment.module.scss';
+import { Nav, NavBreadCrumb, NavLink } from '../../components/Nav';
 
 const cx = classNames.bind(styles);
 
@@ -52,6 +53,10 @@ const Payment = () => {
         checksum();
         getOrder();
     }, [searchParams])
+
+    useEffect(() => {
+        document.title = 'Thanh toán'
+    }, [])
 
     let status = (
         <>
@@ -151,6 +156,14 @@ const Payment = () => {
         <>
             <Header />
             <Container className={`mb-3 mt-3 ${cx('wrapper')}`}>
+                <Nav>
+                    <NavLink to='/'>TRANG CHỦ</NavLink>
+                    <NavBreadCrumb />
+                    <NavLink to='/history'>LỊCH SỬ MUA HÀNG</NavLink>
+                    <NavBreadCrumb />
+                    <NavLink to='#'>ĐƠN HÀNG</NavLink>
+                </Nav>
+
                 <div onClick={() => navigate('/product')} style={{ cursor: 'pointer' }} className='ms-2 text-primary'>
                     <h5>&#8617; Tiếp tục mua hàng</h5>
                 </div>

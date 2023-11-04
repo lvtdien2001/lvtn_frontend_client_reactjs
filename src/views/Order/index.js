@@ -1,18 +1,18 @@
 import { useState, useEffect } from 'react';
 import { Col, Container, Row, Table } from 'react-bootstrap';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { ImCheckboxChecked, ImCheckboxUnchecked } from 'react-icons/im';
 import axios from 'axios';
 import moment from 'moment';
 import classNames from 'classnames/bind';
 import styles from './Order.module.scss';
 import { Header, Footer, LoadingAnimation } from '../../components';
+import { Nav, NavBreadCrumb, NavLink } from '../../components/Nav';
 
 const cx = classNames.bind(styles);
 
 const Order = () => {
     const { id } = useParams();
-    const navigate = useNavigate();
     const [order, setOrder] = useState({});
     const [loading, setLoading] = useState(true);
 
@@ -40,6 +40,10 @@ const Order = () => {
 
         getOrder();
     }, [id]);
+
+    useEffect(() => {
+        document.title = 'Đơn hàng'
+    }, [])
 
     let status = (
         <>
@@ -143,9 +147,17 @@ const Order = () => {
         <>
             <Header />
             <Container className={cx('wrapper')} >
-                <div className='ms-2 text-primary mb-3 fs-5'>
+                <Nav>
+                    <NavLink to='/'>TRANG CHỦ</NavLink>
+                    <NavBreadCrumb />
+                    <NavLink to='/history'>LỊCH SỬ MUA HÀNG</NavLink>
+                    <NavBreadCrumb />
+                    <NavLink to='#'>ĐƠN HÀNG</NavLink>
+                </Nav>
+
+                {/* <div className='ms-2 text-primary mb-3 fs-5'>
                     <b style={{ cursor: 'pointer' }} onClick={() => navigate(-1)}>&#8617; Quay lại</b>
-                </div>
+                </div> */}
                 {loading ? <LoadingAnimation /> : body}
             </Container>
             <Footer />

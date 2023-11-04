@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import { LoadingAnimation, Pagination, Header, Footer } from '../../components';
 import { AllProducts, FilterProduct } from '../../components/Product';
+import { Nav, NavBreadCrumb, NavLink } from '../../components/Nav';
 
 const Search = () => {
     const [searchParams] = useSearchParams();
@@ -83,12 +84,21 @@ const Search = () => {
             } catch (error) { }
         }
         fetchApi();
+
+        document.title = 'Tìm kiếm sản phẩm'
     }, [])
 
     return (
         <>
             <Header />
             <Container style={{ backgroundColor: '#fff', padding: '20px' }} className='mt-3 mb-3'>
+                <Nav>
+                    <NavLink to='/'>TRANG CHỦ</NavLink>
+                    <NavBreadCrumb />
+                    <NavLink to='/product'>ĐỒNG HỒ</NavLink>
+                    <NavBreadCrumb />
+                </Nav>
+
                 {loading ? <LoadingAnimation /> :
                     <>
                         <h5 className='text-secondary mb-3'><i>Kết quả tìm kiếm: {searchParams.get('key')}</i></h5>

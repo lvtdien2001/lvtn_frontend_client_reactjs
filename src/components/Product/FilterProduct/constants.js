@@ -31,8 +31,8 @@ export const styles = [
 ]
 
 export const prices = [
-    { code: '01', name: 'Dưới 2 triệu' },
-    { code: '02', name: '2 triệu - 5 triệu' },
-    { code: '03', name: '5 triệu - 10 triệu' },
-    { code: '04', name: 'Trên 10 triệu' }
+    { code: '01', name: '0 - 2 triệu' },
+    { code: '02', name: '2 - 5 triệu' },
+    { code: '03', name: '5 - 10 triệu' },
+    { code: '04', name: '10 triệu +' }
 ]

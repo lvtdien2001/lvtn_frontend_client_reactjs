@@ -75,7 +75,7 @@ const LoginForm = ({ setCurrentForm, setMessage }) => {
 
             <Row className='justify-content-beetwen mb-2'>
                 <Col><Link onClick={() => setCurrentForm('forgotPassword')} to='#'>Quên mật khẩu?</Link></Col>
-                <Col className='text-end'><Link onClick={() => setCurrentForm('register')} to='#'>Tạo tài khoản?</Link></Col>
+                {/* <Col className='text-end'><Link onClick={() => setCurrentForm('register')} to='#'>Tạo tài khoản?</Link></Col> */}
             </Row>
         </>
     )
@@ -86,14 +86,23 @@ const LoginForm = ({ setCurrentForm, setMessage }) => {
 
             {body}
 
-            <Button
-                variant="outline-success"
-                type="submit"
-                style={{ width: '100%' }}
-                size='lg'
-            >
-                Đăng nhập
-            </Button>
+            <div className={`${cx('btn-div')}`}>
+                <Button
+                    variant="success"
+                    type="submit"
+                    className='me-1'
+                >
+                    Đăng nhập
+                </Button>
+                <Button
+                    variant="outline-success"
+                    type="submit"
+                    className='ms-1'
+                    onClick={() => setCurrentForm('register')}
+                >
+                    Tạo tài khoản
+                </Button>
+            </div>
         </Form>
     )
 }

@@ -2,9 +2,13 @@ import { useContext } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { BsSearch } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
+import classNames from 'classnames/bind';
+import styles from './InputSearch.module.scss';
 import { SearchContext } from '../../../contexts';
 
-const InputSearch = () => {
+const cx = classNames.bind(styles);
+
+const InputSearch = ({ className }) => {
     const { searchValue, setSearchValue } = useContext(SearchContext);
     const navigate = useNavigate();
 
@@ -17,15 +21,23 @@ const InputSearch = () => {
     }
 
     return (
-        <Form onSubmit={e => handleSubmit(e)} className="d-flex">
+        <Form
+            onSubmit={e => handleSubmit(e)}
+            className={`d-flex ${cx('form-wrapper')} ${className}`}
+        >
             <Form.Control
                 type="search"
-                placeholder="Nhập từ khóa . . ."
-                className='me-1'
+                placeholder="Tìm kiếm sản phẩm . . ."
                 value={searchValue}
                 onChange={e => setSearchValue(e.target.value)}
+                className={cx('form')}
             />
-            <Button type='submit' variant="outline-success"><BsSearch /></Button>
+            <div
+                className={cx('search-icon')}
+                onClick={handleSubmit}
+            >
+                <BsSearch />
+            </div>
         </Form>
     )
 }

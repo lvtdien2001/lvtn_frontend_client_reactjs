@@ -2,5 +2,18 @@ html,
 body,
 #root {
     height: 100%;
-    background-color: #f0ecec;
+    background-color: #fff;
+    font-family: var(--bs-body-font-family);
+}
+
+@media only screen and (max-width: 1024px) {
+    .desktop {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 1025px) {
+    .mobile {
+        display: none;
+    }
 }

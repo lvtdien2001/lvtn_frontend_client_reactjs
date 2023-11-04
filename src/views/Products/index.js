@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
-import { Container } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';
 import { Message, LoadingAnimation, Pagination, Header, Footer } from '../../components';
 import { AllProducts, FilterProduct, EmptyProducts } from '../../components/Product';
 import axios from 'axios';
+import { Nav, NavBreadCrumb, NavLink } from '../../components/Nav';
 
 const Products = () => {
     const [message, setMessage] = useState({ type: '', content: '' });
     const [products, setProducts] = useState([]);
-    const [countProducts, setCountProducts] = useState(0);
+    // const [countProducts, setCountProducts] = useState(0);
     const [brands, setBrands] = useState([]);
     const [filter, setFilter] = useState({
         brand: '', gender: '', price: '', system: '', style: '', glass: '', strap: ''
@@ -56,7 +57,7 @@ const Products = () => {
                 if (rsp.data.success) {
                     setProducts(rsp.data.products);
                     setLastPage(rsp.data.pagination.lastPage);
-                    setCountProducts(rsp.data.pagination.countProduct);
+                    // setCountProducts(rsp.data.pagination.countProduct);
                     setLoading(false);
                 }
             } catch (error) { }
@@ -95,42 +96,49 @@ const Products = () => {
             } catch (error) { }
         }
         fetchApi();
+
+        document.title = 'Đồng hồ'
     }, [])
 
     return (
         <>
             <Header />
             <Container style={{ backgroundColor: '#fff', padding: '20px' }} className='mt-3 mb-3'>
+                <Nav>
+                    <NavLink to='/'>TRANG CHỦ</NavLink>
+                    <NavBreadCrumb />
+                    <NavLink to='#'>ĐỒNG HỒ</NavLink>
+                </Nav>
+
                 {loading ? <LoadingAnimation /> :
-                    <>
-                        <FilterProduct
-                            filter={filter}
-                            setFilter={setFilter}
-                            brands={brands}
-                            resetData={resetData}
-                        />
-
-                        <h5 className='text-secondary'>
-                            <i>{countProducts} sản phẩm</i>
-                        </h5>
-
-                        {products.length === 0 ? <EmptyProducts /> :
-                            <AllProducts
-                                formatName={formatName}
-                                formatPrice={formatPrice}
-                                setPage={setPage}
-                                products={products}
-                            />}
-
-                        {lastPage > 1 &&
-                            <Pagination
-                                page={page}
-                                setPage={setPage}
-                                lastPage={lastPage}
-                                align='justify-content-center'
+                    <Row>
+                        <Col lg={2}>
+                            <FilterProduct
+                                filter={filter}
+                                setFilter={setFilter}
+                                brands={brands}
+                                resetData={resetData}
                             />
-                        }
-                    </>
+                        </Col>
+
+                        <Col>
+                            {products.length === 0 ? <EmptyProducts /> :
+                                <AllProducts
+                                    formatName={formatName}
+                                    formatPrice={formatPrice}
+                                    setPage={setPage}
+                                    products={products}
+                                />}
+                            {lastPage > 1 &&
+                                <Pagination
+                                    page={page}
+                                    setPage={setPage}
+                                    lastPage={lastPage}
+                                    align='justify-content-center'
+                                />
+                            }
+                        </Col>
+                    </Row>
                 }
             </Container>
             {message.content &&

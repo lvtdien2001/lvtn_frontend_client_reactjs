@@ -13,7 +13,7 @@ const AllProducts = ({ products, formatName, formatPrice }) => {
     }
 
     let body = (
-        <Row>
+        <Row className='mb-3'>
             {products.map(product => {
                 const renderTooltip = (props) => (
                     <Tooltip id="button-tooltip" {...props}>
@@ -21,17 +21,32 @@ const AllProducts = ({ products, formatName, formatPrice }) => {
                     </Tooltip>
                 );
                 return (
-                    <Col lg={3} xs={6} key={product._id}>
+                    <Col
+                        key={product._id}
+                        lg={3}
+                        xs={6}
+                    >
                         <OverlayTrigger
                             placement="top"
                             overlay={renderTooltip}
                         >
-                            <Card className={`p-1 mt-2 ${cx('card')}`} onClick={() => handleClick(product._id)}>
-                                <Card.Img variant="top" src={product.image.url} alt='Hinh anh san pham' />
+                            <Card
+                                className={` ${cx('card')}`}
+                                onClick={() => handleClick(product._id)}
+                            >
+                                <Card.Img
+                                    variant="top"
+                                    src={product.image.url}
+                                    alt='Hinh anh san pham'
+                                />
                                 <Card.Body>
-                                    <Card.Text>
-                                        <b className='text-primary'>{formatName(product.name)}</b><br />
-                                        <b className='text-danger'>{formatPrice(product.price)}</b>
+                                    <Card.Text className='text-center'>
+                                        <p className={`${cx('product-name')} text-secondary`}>
+                                            {product.name}
+                                        </p>
+                                        <p className={`${cx('product-price')} text-danger`}>
+                                            Giá: {formatPrice(product.price)}
+                                        </p>
                                     </Card.Text>
                                 </Card.Body>
                             </Card>

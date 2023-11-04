@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { Container, Row, Col, InputGroup, Form, Button } from 'react-bootstrap';
 import classNames from 'classnames/bind';
 import axios from 'axios';
@@ -7,6 +7,7 @@ import { LoadingAnimation, Message, Header, Footer } from '../../components';
 import { AuthContext } from '../../contexts';
 import styles from './Profile.module.scss';
 import avatar from '../../assets/avatars/male.png';
+import { Nav, NavBreadCrumb, NavLink } from '../../components/Nav';
 
 const cx = classNames.bind(styles);
 
@@ -258,10 +259,20 @@ const Profile = () => {
         </>
     )
 
+    useEffect(() => {
+        document.title = 'Hồ sơ người dùng'
+    }, [])
+
     return (
         <>
             <Header />
             <Container className='mb-3'>
+                <Nav>
+                    <NavLink to='/'>TRANG CHỦ</NavLink>
+                    <NavBreadCrumb />
+                    <NavLink to='#'>HỒ SƠ NGƯỜI DÙNG</NavLink>
+                </Nav>
+
                 <div className={cx('wrapper')}>
                     <h4>Hồ sơ của tôi</h4>
                     <h6 className='text-secondary mb-3'>Quản lý thông tin hồ sơ để bảo mật tài khoản</h6>

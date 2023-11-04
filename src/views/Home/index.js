@@ -1,7 +1,12 @@
 import { useEffect } from 'react';
 import { Container } from 'react-bootstrap';
-import { ScrollBrands, Header, Footer, CarouselAds } from '../../components';
+import classNames from 'classnames/bind';
+import { Header, Footer } from '../../components';
+import { ScrollBrands, CarouselAds, Collection } from '../../components/Home';
 import { HotProducts, NewProducts } from '../../components/Product';
+import styles from './Home.module.scss';
+
+const cx = classNames.bind(styles);
 
 const Home = () => {
     const formatPrice = input => {
@@ -25,8 +30,12 @@ const Home = () => {
     return (
         <>
             <Header />
-            <CarouselAds />
             <Container>
+                <CarouselAds />
+                {/* <Introduction /> */}
+                <div className={cx('desktop')}>
+                    <Collection />
+                </div>
                 <ScrollBrands />
                 <HotProducts formatPrice={formatPrice} formatName={formatName} />
                 <NewProducts formatPrice={formatPrice} formatName={formatName} />

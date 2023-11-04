@@ -1,7 +1,6 @@
 .avatar {
-    width: 30px;
-    height: 30px;
-    border-radius: 30px;
+    width: 65px;
+    height: 65px;
 }
 
 .star {
@@ -25,4 +24,25 @@
 
 .general {
     font-size: 13px;
+}
+
+.comments-list {
+    border-bottom: solid 1px var(--bs-gray-300);
+    max-height: 500px;
+    overflow: scroll;
+    overflow-x: hidden;
+
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: var(--bs-gray);
+        border-radius: 20px;
+    }
+}
+
+.cmt {
+    display: flex;
+    align-items: center;
 }

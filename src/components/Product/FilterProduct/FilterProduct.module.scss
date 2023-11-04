@@ -1,0 +1,38 @@
+.text-filter {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.text-all {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.border-b {
+    border-bottom: solid 1px var(--bs-gray-300);
+    margin-bottom: 12px;
+}
+
+.text-title {
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+
+    &:hover {
+        color: #000;
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    .responsive {
+        display: none;
+    }
+
+    .show {
+        display: block;
+    }
+
+    .hide {
+        display: none;
+    }
+}

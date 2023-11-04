@@ -248,11 +248,21 @@ const UpdateAddressModal = ({ setMessage, setReload, address }) => {
 
     return (
         <>
-            <Button size='sm' variant="success" onClick={handleShow}>
+            <Button
+                size='sm'
+                variant="success"
+                onClick={handleShow}
+                className='ms-2'
+            >
                 Cập nhật
             </Button>
 
-            <Modal size='lg' className='mt-3' show={show} onHide={handleClose}>
+            <Modal
+                size='lg'
+                className='mt-3'
+                show={show}
+                onHide={handleClose}
+            >
                 <Modal.Header closeButton>
                     <Modal.Title>Cập nhật thông tin địa chỉ</Modal.Title>
                 </Modal.Header>

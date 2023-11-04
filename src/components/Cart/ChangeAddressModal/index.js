@@ -52,7 +52,12 @@ const ChangeAddressModal = ({ addresses, setReload, setAddress, checkedAddress }
 
     return (
         <>
-            <span onClick={handleShow} className={cx('text-blur')}>Đổi địa chỉ &#8594; </span>
+            <span
+                onClick={handleShow}
+                className={cx('text-blur')}
+            >
+                Đổi địa chỉ &#8594;
+            </span>
 
             <Modal className='mt-3' show={show} onHide={handleClose}>
                 <Modal.Header closeButton>

@@ -1,13 +1,18 @@
 import { useEffect, useState } from 'react';
-import { Button, Nav, NavDropdown, Navbar } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Row, Col, Dropdown } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import classNames from 'classnames/bind';
+import { AiFillHome } from 'react-icons/ai';
 import axios from 'axios';
+import styles from './NavBar.module.scss';
 import { LoadingAnimation } from '../..';
-import logo from '../../../assets/images/logo.jpg';
+
+const cx = classNames.bind(styles);
 
 const NavBar = () => {
     const [brands, setBrands] = useState([]);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchApi = async () => {
@@ -16,57 +21,108 @@ const NavBar = () => {
                 const rsp = await axios.get(`${process.env.REACT_APP_API_URL}/brand`);
                 setBrands(rsp.data.brands);
                 setLoading(false);
-            } catch (error) { }
+            } catch (_) { }
         }
         fetchApi();
     }, [])
 
-    let nav = (
-        <Nav
-            className="me-auto my-2 my-lg-0"
-            style={{ maxHeight: '100px' }}
-            navbarScroll
-        >
-            <NavDropdown title='THƯƠNG HIỆU'>
-                <div style={{ maxHeight: '400px', overflow: 'scroll', overflowX: 'hidden', zIndex: '10000' }}>
-                    {loading ? <LoadingAnimation /> :
-                        brands.map(brand => {
-                            return (
-                                <NavDropdown.Item key={brand._id} as='div'>
-                                    <Button
-                                        className='mb-1'
-                                        size='sm'
-                                        variant='outline-dark'
-                                        key={brand._id}
-                                    >
-                                        <Link to={`/product?brand=${brand._id}`}><img alt='' src={brand.logo?.url} width='100px' /></Link>
-                                    </Button>
-                                </NavDropdown.Item>
-                            )
-                        })
-                    }
-                </div>
-            </NavDropdown>
-            <Nav.Link as={Link} to='/product?gender=1'>NAM</Nav.Link>
-            <Nav.Link as={Link} to='/product?gender=2'>NỮ</Nav.Link>
-            <Nav.Link as={Link} to='/product?gender=0'>CẶP ĐÔI</Nav.Link>
-            <Nav.Link as={Link} to='/'>GIỚI THIỆU</Nav.Link>
-        </Nav>
+    let brandsList = (
+        <Dropdown>
+            <Dropdown.Toggle
+                as='b'
+                className={cx('text-menu')}
+            >
+                THƯƠNG HIỆU
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu className={cx('dropdown-menu')}>
+                {loading ? <LoadingAnimation /> : brands.map(brand => {
+                    return (
+                        <Dropdown.Item
+                            as={'div'}
+                            key={brand._id}
+                            className={`text-center mb-1 ${cx('dropdown-items')}`}
+                        >
+                            <img
+                                alt='logo thuong hieu'
+                                src={brand.logo?.url}
+                                width={'100px'}
+                            />
+                        </Dropdown.Item>
+                    )
+                })}
+            </Dropdown.Menu>
+        </Dropdown>
+    )
+
+    let menu = (
+        <Row className='text-center align-items-center'>
+            <Col
+                className={`text-end ${cx('desktop')}`}
+                xs={1}
+            >
+                <b
+                    className={cx('text-menu', 'home')}
+                    onClick={() => navigate('/')}
+                >
+                    <AiFillHome />
+                </b>
+            </Col>
+            <Col>
+                {brandsList}
+            </Col>
+            <Col>
+                <b
+                    className={cx('text-menu')}
+                    onClick={() => navigate('/product?gender=1')}
+                >
+                    ĐỒNG HỒ NAM
+                </b>
+            </Col>
+            <Col>
+                <b
+                    className={cx('text-menu')}
+                    onClick={() => navigate('/product?gender=2')}
+                >
+                    ĐỒNG HỒ NỮ
+                </b>
+            </Col>
+            <Col>
+                <b
+                    className={cx('text-menu')}
+                    onClick={() => navigate('/product?gender=0')}
+                >
+                    ĐỒNG HỒ ĐÔI
+                </b>
+            </Col>
+            <Col>
+                <b
+                    className={cx('text-menu')}
+                >
+                    LIÊN HỆ
+                </b>
+            </Col>
+            <Col>
+                <b
+                    className={cx('text-menu')}
+                >
+                    KINH NGHIỆM
+                </b>
+            </Col>
+            <Col>
+                <b
+                    className={cx('text-menu')}
+                >
+                    GIỚI THIỆU
+                </b>
+            </Col>
+        </Row>
     )
 
     return (
-        <>
-            <Navbar.Brand as={Link} to="/">
-                <img src={logo} alt='logo' width='50px' height='50px' />
-            </Navbar.Brand>
-
-            <Navbar.Toggle aria-controls="navbarScroll" />
-
-            <Navbar.Collapse id="navbarScroll">
-                {nav}
-            </Navbar.Collapse>
-
-        </>
+        <div>
+            {menu}
+        </div>
     );
 }
 

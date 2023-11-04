@@ -1,264 +1,314 @@
 import { useState } from 'react';
-import { Row, Col, Dropdown, Button } from 'react-bootstrap';
-import { BiFilterAlt } from 'react-icons/bi';
-import { genders, systems, glasses, straps, prices } from './contants';
+import { Button } from 'react-bootstrap';
+import { BiFilterAlt, BiPlus, BiMinus } from 'react-icons/bi';
+import classNames from 'classnames/bind';
+import styles from './FilterProduct.module.scss';
+import { genders, systems, glasses, straps, prices } from './constants';
 
-const FilterProduct = ({ brands, setFilter, filter, resetData }) => {
+const cx = classNames.bind(styles);
+
+const FilterProduct = ({ brands, setFilter, filter, resetData, className }) => {
     const [show, setShow] = useState({
-        brand: false, gender: false, system: false, glass: false, strap: false, price: false
+        brand: filter.brand || false,
+        gender: filter.gender || false,
+        system: filter.system || false,
+        glass: filter.glass || false,
+        strap: filter.strap || false,
+        price: filter.price || false
     })
+    const [showFilter, setShowFilter] = useState(false);
 
     const handleChange = (type, value) => {
         switch (type) {
             case 'brand':
-                setFilter(prev => { return { ...prev, brand: value } });
-                setShow(prev => { return { ...prev, brand: !prev.brand } })
+                setFilter(prev => {
+                    return {
+                        ...prev,
+                        brand: filter.brand === value ? '' : value
+                    }
+                });
+                setShow(prev => {
+                    return { ...prev, brand: !prev.brand }
+                })
                 break;
             case 'gender':
-                setFilter(prev => { return { ...prev, gender: value } });
-                setShow(prev => { return { ...prev, gender: !prev.gender } })
+                setFilter(prev => {
+                    return {
+                        ...prev,
+                        gender: filter.gender === value ? '' : value
+                    }
+                });
+                setShow(prev => {
+                    return { ...prev, gender: !prev.gender }
+                })
                 break;
             case 'system':
-                setFilter(prev => { return { ...prev, system: value } });
-                setShow(prev => { return { ...prev, system: !prev.system } })
+                setFilter(prev => {
+                    return {
+                        ...prev,
+                        system: filter.system === value ? '' : value
+                    }
+                });
+                setShow(prev => {
+                    return { ...prev, system: !prev.system }
+                })
                 break;
             case 'glass':
-                setFilter(prev => { return { ...prev, glass: value } });
-                setShow(prev => { return { ...prev, glass: !prev.glass } })
+                setFilter(prev => {
+                    return {
+                        ...prev,
+                        glass: filter.glass === value ? '' : value
+                    }
+                });
+                setShow(prev => {
+                    return { ...prev, glass: !prev.glass }
+                })
                 break;
             case 'strap':
-                setFilter(prev => { return { ...prev, strap: value } });
-                setShow(prev => { return { ...prev, strap: !prev.strap } })
+                setFilter(prev => {
+                    return {
+                        ...prev,
+                        strap: filter.strap === value ? '' : value
+                    }
+                });
+                setShow(prev => {
+                    return { ...prev, strap: !prev.strap }
+                })
                 break;
             case 'price':
-                setFilter(prev => { return { ...prev, price: value } });
-                setShow(prev => { return { ...prev, price: !prev.price } })
+                setFilter(prev => {
+                    return {
+                        ...prev,
+                        price: filter.price === value ? '' : value
+                    }
+                });
+                setShow(prev => {
+                    return { ...prev, price: !prev.price }
+                })
                 break;
             default:
                 throw new Error('Invalid type in handleChange filter')
         }
     }
 
-    let filterBrands = (
-        <Dropdown show={show.brand}>
-            <Dropdown.Toggle
-                variant='outline-success'
-                active={filter.brand}
-                className='mb-1'
-                style={{ width: '130px' }}
-                onClick={() => setShow(prev => { return { ...prev, brand: !prev.brand } })}
-            >
-                Thương hiệu
-            </Dropdown.Toggle>
-
-            <Dropdown.Menu style={{ height: '400px', overflow: 'scroll', overflowX: 'hidden' }}>
-                {brands.map(brand => {
-                    return (
-                        <Dropdown.Item key={brand._id} as='div'>
-                            <Button
-                                className='ms-1 me-1 mb-2'
-                                variant='outline-success'
-                                size='sm'
-                                onClick={() => handleChange('brand', brand._id)}
-                                active={brand._id === filter.brand}
-                            >
-                                <img src={brand.logo?.url} alt='' width='100px' />
-                            </Button>
-                        </Dropdown.Item>
-                    )
-                })}
-            </Dropdown.Menu>
-        </Dropdown>
-    )
-
-    let filterGender = (
-        <Dropdown show={show.gender}>
-            <Dropdown.Toggle
-                variant='outline-success'
-                style={{ width: '130px' }}
-                className='mb-1'
-                active={filter.gender}
-                onClick={() => setShow(prev => { return { ...prev, gender: !prev.gender } })}
-            >
-                Giới tính
-            </Dropdown.Toggle>
-
-            <Dropdown.Menu>
-                {genders.map(gender => {
-                    return (
-                        <Button
-                            className='ms-1 me-1 mb-2'
-                            variant='outline-success'
-                            size='sm'
-                            onClick={() => handleChange('gender', gender.code)}
-                            active={gender.code === filter.gender}
-                            key={gender.code}
-                        >
-                            {gender.name}
-                        </Button>
-                    )
-                })}
-            </Dropdown.Menu>
-        </Dropdown>
-    )
-
-    let filterSystem = (
-        <Dropdown show={show.system}>
-            <Dropdown.Toggle
-                variant='outline-success'
-                style={{ width: '130px' }}
-                active={filter.system}
-                className='mb-1'
-                onClick={() => setShow(prev => { return { ...prev, system: !prev.system } })}
-            >
-                Bộ máy
-            </Dropdown.Toggle>
-
-            <Dropdown.Menu>
-                {systems.map(system => {
-                    return (
-                        <Button
-                            className='ms-1 me-1 mb-2'
-                            variant='outline-success'
-                            size='sm'
-                            onClick={() => handleChange('system', system.code)}
-                            active={system.code === filter.system}
-                            key={system.code}
-                        >
-                            {system.name}
-                        </Button>
-                    )
-                })}
-            </Dropdown.Menu>
-        </Dropdown>
-    )
-
-    let filterGlass = (
-        <Dropdown show={show.glass}>
-            <Dropdown.Toggle
-                variant='outline-success'
-                style={{ width: '130px' }}
-                active={filter.glass}
-                className='mb-1'
-                onClick={() => setShow(prev => { return { ...prev, glass: !prev.glass } })}
-            >
-                Mặt kính
-            </Dropdown.Toggle>
-
-            <Dropdown.Menu>
-                {glasses.map(glass => {
-                    return (
-                        <Button
-                            className='ms-1 me-1 mb-2'
-                            variant='outline-success'
-                            size='sm'
-                            onClick={() => handleChange('glass', glass.code)}
-                            active={glass.code === filter.glass}
-                            key={glass.code}
-                        >
-                            {glass.name}
-                        </Button>
-                    )
-                })}
-            </Dropdown.Menu>
-        </Dropdown>
-    )
-
-    let filterStrap = (
-        <Dropdown show={show.strap}>
-            <Dropdown.Toggle
-                variant='outline-success'
-                style={{ width: '130px' }}
-                active={filter.strap}
-                className='mb-1'
-                onClick={() => setShow(prev => { return { ...prev, strap: !prev.strap } })}
-            >
-                Dây đeo
-            </Dropdown.Toggle>
-
-            <Dropdown.Menu>
-                {straps.map(strap => {
-                    return (
-                        <Button
-                            className='ms-1 me-1 mb-2'
-                            variant='outline-success'
-                            size='sm'
-                            onClick={() => handleChange('strap', strap.code)}
-                            active={strap.code === filter.strap}
-                            key={strap.code}
-                        >
-                            {strap.name}
-                        </Button>
-                    )
-                })}
-            </Dropdown.Menu>
-        </Dropdown>
-    )
-
-    let filterPrice = (
-        <Dropdown show={show.price}>
-            <Dropdown.Toggle
-                variant='outline-success'
-                style={{ width: '130px' }}
-                onClick={() => setShow(prev => { return { ...prev, price: !prev.price } })}
-                active={filter.price}
-                className='mb-1'
-            >
-                Đơn giá
-            </Dropdown.Toggle>
-
-            <Dropdown.Menu>
-                {prices.map(price => {
-                    return (
-                        <Button
-                            className='ms-1 me-1 mb-2'
-                            variant='outline-success'
-                            size='sm'
-                            onClick={() => handleChange('price', price.code)}
-                            active={price.code === filter.price}
-                            key={price.code}
-                        >
-                            {price.name}
-                        </Button>
-                    )
-                })}
-            </Dropdown.Menu>
-        </Dropdown>
-    )
-
     return (
-        <Row className='align-items-center'>
-            <Col><h5>Bộ lọc <BiFilterAlt />:</h5></Col>
-            <Col>
-                <Button
+        <div className={`text-secondary ${className}`}>
+            <div className={`d-flex justify-content-between text-secondary align-items-center ${cx('border-b')}`}>
+                <div
+                    className={cx('text-filter')}
+                    onClick={() => setShowFilter(prev => !prev)}
+                >
+                    Bộ lọc <BiFilterAlt />
+                </div>
+                <div
+                    className={cx('text-all')}
                     onClick={resetData}
-                    variant='outline-success'
-                    style={{ width: '130px' }}
-                    className='mb-1'
-                    active={!filter.brand && !filter.gender && !filter.price && !filter.glass && !filter.strap && !filter.system}
                 >
                     Tất cả
-                </Button>
-            </Col>
-            <Col>
-                {filterBrands}
-            </Col>
-            <Col>
-                {filterGender}
-            </Col>
-            <Col>
-                {filterPrice}
-            </Col>
-            <Col>
-                {filterSystem}
-            </Col>
-            <Col>
-                {filterGlass}
-            </Col>
-            <Col>
-                {filterStrap}
-            </Col>
-        </Row>
+                </div>
+            </div>
+
+            <div className={cx('responsive', showFilter ? 'show' : 'hide')}>
+                {/* price */}
+                <div className={cx('border-b')}>
+                    <div
+                        className={`d-flex justify-content-between ${cx('text-title')}`}
+                        onClick={() => setShow(prev => {
+                            return { ...prev, price: !prev.price }
+                        })}
+                    >
+                        <div>Đơn giá</div>
+                        <div>
+                            {show.price ? <BiMinus /> : <BiPlus />}
+                        </div>
+                    </div>
+                    {/* toggle show */}
+                    {show.price &&
+                        <div className='mt-3 mb-3'>
+                            {prices.map(price => {
+                                return (
+                                    <Button
+                                        size='sm'
+                                        variant='outline-success'
+                                        key={price.code}
+                                        className='m-1'
+                                        onClick={() => handleChange('price', price.code)}
+                                        active={price.code === filter.price}
+                                    >
+                                        {price.name}
+                                    </Button>
+                                )
+                            })}
+                        </div>
+                    }
+                </div>
+                {/* brand */}
+                <div className={cx('border-b')}>
+                    <div
+                        className={`d-flex justify-content-between ${cx('text-title')}`}
+                        onClick={() => setShow(prev => {
+                            return { ...prev, brand: !prev.brand }
+                        })}
+                    >
+                        <div>Thương hiệu</div>
+                        <div>
+                            {show.brand ? <BiMinus /> : <BiPlus />}
+                        </div>
+                    </div>
+                    {/* toggle show */}
+                    {show.brand &&
+                        <div className='mt-3 mb-3'>
+                            {brands.map(brand => {
+                                return (
+                                    <Button
+                                        size='sm'
+                                        variant='outline-success'
+                                        key={brand._id}
+                                        className='m-1'
+                                        onClick={() => handleChange('brand', brand._id)}
+                                        active={brand._id === filter.brand}
+                                    >
+                                        {brand.name}
+                                    </Button>
+                                )
+                            })}
+                        </div>
+                    }
+                </div>
+                {/* gender */}
+                <div className={cx('border-b')}>
+                    <div
+                        className={`d-flex justify-content-between ${cx('text-title')}`}
+                        onClick={() => setShow(prev => {
+                            return { ...prev, gender: !prev.gender }
+                        })}
+                    >
+                        <div>Giới tính</div>
+                        <div>
+                            {show.gender ? <BiMinus /> : <BiPlus />}
+                        </div>
+                    </div>
+                    {/* toggle show */}
+                    {show.gender &&
+                        <div className='mt-3 mb-3'>
+                            {genders.map(gender => {
+                                return (
+                                    <Button
+                                        size='sm'
+                                        variant='outline-success'
+                                        key={gender.code}
+                                        className='m-1'
+                                        onClick={() => handleChange('gender', gender.code)}
+                                        active={gender.code === filter.gender}
+                                    >
+                                        {gender.name}
+                                    </Button>
+                                )
+                            })}
+                        </div>
+                    }
+                </div>
+                {/* system */}
+                <div className={cx('border-b')}>
+                    <div
+                        className={`d-flex justify-content-between ${cx('text-title')}`}
+                        onClick={() => setShow(prev => {
+                            return { ...prev, system: !prev.system }
+                        })}
+                    >
+                        <div>Bộ máy</div>
+                        <div>
+                            {show.system ? <BiMinus /> : <BiPlus />}
+                        </div>
+                    </div>
+                    {/* toggle show */}
+                    {show.system &&
+                        <div className='mt-3 mb-3'>
+                            {systems.map(system => {
+                                return (
+                                    <Button
+                                        size='sm'
+                                        variant='outline-success'
+                                        key={system.code}
+                                        className='m-1'
+                                        onClick={() => handleChange('system', system.code)}
+                                        active={system.code === filter.system}
+                                    >
+                                        {system.name}
+                                    </Button>
+                                )
+                            })}
+                        </div>
+                    }
+                </div>
+                {/* glass */}
+                <div className={cx('border-b')}>
+                    <div
+                        className={`d-flex justify-content-between ${cx('text-title')}`}
+                        onClick={() => setShow(prev => {
+                            return { ...prev, glass: !prev.glass }
+                        })}
+                    >
+                        <div>Mặt kính</div>
+                        <div>
+                            {show.glass ? <BiMinus /> : <BiPlus />}
+                        </div>
+                    </div>
+                    {/* toggle show */}
+                    {show.glass &&
+                        <div className='mt-3 mb-3'>
+                            {glasses.map(glass => {
+                                return (
+                                    <Button
+                                        size='sm'
+                                        variant='outline-success'
+                                        key={glass.code}
+                                        className='m-1'
+                                        onClick={() => handleChange('glass', glass.code)}
+                                        active={glass.code === filter.glass}
+                                    >
+                                        {glass.name}
+                                    </Button>
+                                )
+                            })}
+                        </div>
+                    }
+                </div>
+                {/* strap */}
+                <div className={cx('border-b')}>
+                    <div
+                        className={`d-flex justify-content-between ${cx('text-title')}`}
+                        onClick={() => setShow(prev => {
+                            return { ...prev, strap: !prev.strap }
+                        })}
+                    >
+                        <div>Dây đeo</div>
+                        <div>
+                            {show.strap ? <BiMinus /> : <BiPlus />}
+                        </div>
+                    </div>
+                    {/* toggle show */}
+                    {show.strap &&
+                        <div className='mt-3 mb-3'>
+                            {straps.map(strap => {
+                                return (
+                                    <Button
+                                        size='sm'
+                                        variant='outline-success'
+                                        key={strap.code}
+                                        className='m-1'
+                                        onClick={() => handleChange('strap', strap.code)}
+                                        active={strap.code === filter.strap}
+                                    >
+                                        {strap.name}
+                                    </Button>
+                                )
+                            })}
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
     )
 }
 

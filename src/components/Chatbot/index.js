@@ -4,13 +4,15 @@ import styles from './Chatbot.module.scss';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import { BsSend, BsFillChatLeftTextFill, BsRobot } from 'react-icons/bs';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
 const Chatbot = () => {
     const [messages, setMessages] = useState([{
         text: 'Xin chào! Rất vui được hỗ trợ bạn.',
-        sender: 'bot'
+        sender: 'bot',
+        link: ''
     }]);
     const [show, setShow] = useState(false);
     const [text, setText] = useState('');
@@ -19,14 +21,14 @@ const Chatbot = () => {
     const handleSend = async e => {
         e.preventDefault();
 
-        setMessages(prev => [...prev, { text, sender: 'customer' }]);
+        setMessages(prev => [...prev, { text, sender: 'customer', link: '' }]);
         setText('');
 
         try {
             setLoading(true);
             const rsp = await axios.post(`${process.env.REACT_APP_API_RASA}`, { message: text });
             rsp.data?.map(msg => {
-                setMessages(prev => [...prev, { text: msg.text, sender: 'bot' }])
+                setMessages(prev => [...prev, { text: msg.text, sender: 'bot', link: msg.image }])
             })
             if (rsp.data.length === 0) {
                 setMessages(prev => [...prev, { text: 'Xin lỗi quý khách, tôi chưa hiểu được yêu cầu của quý khách ạ!', sender: 'bot' }])
@@ -75,6 +77,7 @@ const Chatbot = () => {
                 Bắt đầu trò chuyện với Chatbot. Hỗ trợ chăm sóc khách hàng 24/7.
             </p>
             {messages.map((message, index) => {
+
                 return (
                     <div
                         key={index}
@@ -84,7 +87,10 @@ const Chatbot = () => {
                             style={{ width: 'max-content', maxWidth: '250px' }}
                             className={`text-start ${cx('text', message.sender === 'customer' ? 'bg-customer' : 'bg-bot')}`}
                         >
-                            {message.text}
+                            {message.text ||
+                                (<div>
+                                    Bạn có thể xem sản phẩm <Link to={message.link}>tại đây</Link>
+                                </div>)}
                         </div>
                     </div>
                 )

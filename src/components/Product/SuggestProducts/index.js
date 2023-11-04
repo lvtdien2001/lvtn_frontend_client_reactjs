@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Card, Tooltip, Row, Col, OverlayTrigger } from 'react-bootstrap';
 import classNames from 'classnames/bind';
 import styles from './SuggestProducts.module.scss';
@@ -27,14 +27,14 @@ const SuggestProducts = ({ formatName, formatPrice, currentProduct }) => {
         }
 
         fetchApi()
-    }, [])
+    }, [currentProduct])
 
     const handleClick = productId => {
         navigate(`/product/${productId}`);
     }
 
     let body = (
-        <Row>
+        <Row className='mb-3'>
             {products.map(product => {
                 const renderTooltip = (props) => (
                     <Tooltip id="button-tooltip" {...props}>
@@ -42,17 +42,32 @@ const SuggestProducts = ({ formatName, formatPrice, currentProduct }) => {
                     </Tooltip>
                 );
                 return (
-                    <Col key={product._id}>
+                    <Col
+                        key={product._id}
+                        lg={3}
+                        xs={6}
+                    >
                         <OverlayTrigger
                             placement="top"
                             overlay={renderTooltip}
                         >
-                            <Card className={`p-1 ${cx('card')}`} onClick={() => handleClick(product._id)}>
-                                <Card.Img variant="top" src={product.image.url} alt='Hinh anh san pham' />
+                            <Card
+                                className={` ${cx('card')}`}
+                                onClick={() => handleClick(product._id)}
+                            >
+                                <Card.Img
+                                    variant="top"
+                                    src={product.image.url}
+                                    alt='Hinh anh san pham'
+                                />
                                 <Card.Body>
-                                    <Card.Text>
-                                        <b className='text-primary'>{formatName(product.name)}</b><br />
-                                        <b className='text-danger'>{formatPrice(product.price)}</b>
+                                    <Card.Text as='div' className='text-center'>
+                                        <p className={`${cx('product-name')} text-secondary`}>
+                                            {product.name}
+                                        </p>
+                                        <p className={`${cx('product-price')} text-danger`}>
+                                            Giá: {formatPrice(product.price)}
+                                        </p>
                                     </Card.Text>
                                 </Card.Body>
                             </Card>
@@ -65,17 +80,14 @@ const SuggestProducts = ({ formatName, formatPrice, currentProduct }) => {
 
     return (
         <div className={`mb-3 ${cx('wrapper')}`}>
-            <Row>
-                <Col>
-                    <h4>SẢN PHẨM GỢI Ý</h4>
-                </Col>
-                <Col className='text-end'>
-                    <Link className={cx('link')} to='/product'>
-                        <h5>Xem tất cả sản phẩm &#10145;</h5>
-                    </Link>
-                </Col>
-            </Row>
+            <h3 className='text-center mb-3 text-secondary'>SẢN PHẨM GỢI Ý</h3>
             {loading ? <LoadingAnimation /> : body}
+
+            <div
+                className={`text-center ${cx('text-all-product')}`}
+            >
+                <span onClick={() => navigate('/product')}>XEM TẤT CẢ SẢN PHẨM</span>
+            </div>
         </div>
     )
 }

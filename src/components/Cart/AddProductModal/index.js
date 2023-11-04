@@ -31,7 +31,7 @@ const AddProductModal = ({ product, formatPrice, setMessage }) => {
         }
     }
 
-    const handleClick = () => isAuthenticated ? setShow(true) : navigate('/login');
+    const handleClick = () => isAuthenticated ? handleShow : navigate('/login');
 
     const handleSubmit = async e => {
         e?.preventDefault();
@@ -64,7 +64,7 @@ const AddProductModal = ({ product, formatPrice, setMessage }) => {
     return (
         <>
             <Button
-                variant="outline-success"
+                variant="success"
                 size='lg'
                 onClick={handleClick}
                 style={{ width: '100%' }}

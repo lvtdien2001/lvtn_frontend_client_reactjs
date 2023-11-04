@@ -1,8 +1,13 @@
+import { useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 
 const NotFound = () => {
     const navigate = useNavigate();
+
+    useEffect(() => {
+        document.title = 'Not Found'
+    }, [])
 
     return (
         <Container>

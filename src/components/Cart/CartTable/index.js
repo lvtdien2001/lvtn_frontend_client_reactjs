@@ -61,7 +61,7 @@ const CartTable = ({ formatPrice, setMessage }) => {
             } catch (error) { }
         }
         fetchApi();
-    }, [reload])
+    }, [reload, address])
 
     const handleUpdateQuantity = async (type, quantity, cartId, productId) => {
         if (type === '-' && Number(quantity) === 1) {
@@ -228,39 +228,82 @@ const CartTable = ({ formatPrice, setMessage }) => {
                     )
                 })}
                 <tr>
-                    <td className='text-end' style={{ fontSize: '18px' }} colSpan={7}>
-                        <b>Địa chỉ nhận hàng: </b>
-                        {address?.fullName && <span className='me-2'>
-                            {address.fullName}, {address.description}, {address.ward.name}, {address.district.name}, {address.province.name}
-                        </span>}
-                        {address?.isDefault && <Button className='me-2' size='sm' disabled variant='outline-danger'>Mặc định</Button>}
-                        <ChangeAddressModal setAddress={setAddress} checkedAddress={address} addresses={addresses} setReload={setReload} />
+                    <td
+                        style={{ fontSize: '18px' }}
+                        colSpan={7}
+                    >
+                        <div className='d-flex justify-content-between'>
+                            <div>
+                                <b>Địa chỉ nhận hàng: </b>
+                                {address?.fullName && <span className='me-2'>
+                                    {address.fullName}, {address.description}, {address.ward.name}, {address.district.name}, {address.province.name}
+                                </span>}
+                                {address?.isDefault &&
+                                    <Button
+                                        className='me-2'
+                                        size='sm'
+                                        disabled
+                                        variant='outline-danger'
+                                    >
+                                        Mặc định
+                                    </Button>
+                                }
+                            </div>
+                            <div className=''>
+                                <ChangeAddressModal
+                                    setAddress={setAddress}
+                                    checkedAddress={address}
+                                    addresses={addresses}
+                                    setReload={setReload}
+                                />
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 <tr>
                     <td className='text-end' style={{ fontSize: '18px' }} colSpan={7}>
-                        <b>Voucher của bạn: </b>
-                        <span className={cx('text-blur')}>Chọn hoặc nhập mã &#8594; </span>
+                        <div className='d-flex justify-content-between'>
+                            <div>
+                                <b>Voucher của bạn: </b>
+                            </div>
+                            <div>
+                                <span className={cx('text-blur')}>
+                                    Chọn hoặc nhập mã &#8594;
+                                </span>
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 <tr>
                     <td className='text-end' style={{ fontSize: '18px' }} colSpan={7}>
-                        <b>Phương thức thanh toán: </b>
-                        <span className='me-3'>
-                            {paymentMethod === '01' && 'Thanh toán trực tuyến qua ví VNPAY'}
-                            {paymentMethod === '02' && 'Thanh toán khi nhận hàng'}
-                        </span>
-                        <PaymentModal setPaymentMethod={setPaymentMethod} />
+                        <div className='d-flex justify-content-between'>
+                            <div>
+                                <b>Phương thức thanh toán: </b>
+                                <span className='me-3'>
+                                    {paymentMethod === '01' && 'Thanh toán trực tuyến qua ví VNPAY'}
+                                    {paymentMethod === '02' && 'Thanh toán khi nhận hàng'}
+                                </span>
+                            </div>
+                            <div>
+                                <PaymentModal setPaymentMethod={setPaymentMethod} />
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 <tr>
                     <td className='text-end' colSpan={7}>
-                        <b className='fs-5'>
-                            Tổng thanh toán: <span className='text-danger'>{formatPrice(totalAmount)}</span>
-                        </b>
-                        <Button onClick={handleSubmit} className='ms-3' size='lg' variant="outline-success">
-                            Mua hàng
-                        </Button>
+                        <div className='d-flex justify-content-between'>
+                            <div>
+                                <b className='fs-5'>
+                                    Tổng thanh toán: <span className='text-danger'>{formatPrice(totalAmount)}</span>
+                                </b>
+                            </div>
+                            <div>
+                                <Button onClick={handleSubmit} className='ms-3' size='lg' variant="outline-success">
+                                    Mua hàng
+                                </Button>
+                            </div>
+                        </div>
                     </td>
                 </tr>
             </tbody>

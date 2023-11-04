@@ -5,6 +5,7 @@ import classNames from 'classnames/bind';
 import { Header, Footer, LoadingAnimation, Message } from '../../components';
 import { OrdersList, FilterOrder, Empty } from '../../components/History';
 import styles from './History.module.scss';
+import { Nav, NavBreadCrumb, NavLink } from '../../components/Nav';
 
 const cx = classNames.bind(styles);
 
@@ -40,21 +41,41 @@ const History = () => {
         getOrders();
     }, [filter, reload])
 
+    useEffect(() => {
+        document.title = 'Lịch sử mua hàng'
+    }, [])
+
     return (
         <>
             <Header />
             <Container className={cx('wrapper')}>
+                <Nav>
+                    <NavLink to='/'>TRANG CHỦ</NavLink>
+                    <NavBreadCrumb />
+                    <NavLink to='#'>LỊCH SỬ MUA HÀNG</NavLink>
+                </Nav>
+
                 {!loading && <FilterOrder filter={filter} setFilter={setFilter} />}
                 {loading ?
                     <LoadingAnimation /> :
                     (orders.length > 0 ?
-                        <OrdersList orders={orders} formatPrice={formatPrice} setMessage={setMessage} setReload={setReload} /> :
-                        <Empty />
+                        <OrdersList
+                            orders={orders}
+                            formatPrice={formatPrice}
+                            setMessage={setMessage}
+                            setReload={setReload}
+                        /> : <Empty />
                     )
                 }
             </Container>
             <Footer />
-            {message.content && <Message message={message.content} type={message.type} setMessage={setMessage} />}
+            {message.content &&
+                <Message
+                    message={message.content}
+                    type={message.type}
+                    setMessage={setMessage}
+                />
+            }
         </>
     )
 }
